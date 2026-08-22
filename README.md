@@ -37,8 +37,13 @@ uploaded directly by `vercel deploy`; [`.gitignore`](.gitignore) records where e
 set comes from.
 
 What is tracked: clip thumbnails, band photos, member portraits, and the wordmark —
-about 7 MB. A fresh clone runs and looks right; it is just missing the video, the
-event posters, and the hero background loop.
+about 7 MB.
+
+A fresh clone serves all three pages and the layout is intact, but it is visibly
+incomplete: the hero falls back to its poster frame instead of the video loop, and the
+"where we played" column renders 18 rows with empty art, since every event poster is
+untracked. Clip thumbnails, portraits and band photos all render. Restore the missing
+sets from the vault to get the real thing.
 
 ## Support Ukraine
 
