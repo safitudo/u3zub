@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>U3ZUB — Ukrainian rock for the free world.</title>
+<meta name="description" content="U3ZUB — Ukrainian rock band. Folklore, anthems of resistance, rock arrangements. Stand with Ukraine." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  /* -------- tokens -------- */
+  :root{
+    --ink:#000;
+    --paper:#fff;
+    --mute:#666;
+    --yellow:#ffd500;
+    --blue:#0057b7;
+    --stencil:'Stardos Stencil', 'Big Shoulders Stencil Display', Impact, sans-serif;
+    --body:'Manrope', system-ui, -apple-system, sans-serif;
+    --mono:'JetBrains Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-weight:400;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+
+  /* selection */
+  ::selection{background:var(--yellow);color:var(--ink)}
+
+  /* -------- nav -------- */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+    border-bottom:1px solid transparent;
+    color:var(--paper);
+  }
+  .nav.scrolled{
+    background:var(--paper);
+    color:var(--ink);
+    border-bottom-color:var(--ink);
+  }
+  .nav__brand{display:flex;align-items:center;gap:10px;font-family:var(--stencil);font-size:22px;letter-spacing:.06em}
+  .nav__brand .glyph{width:36px;height:18px}
+  .nav__links{display:flex;gap:26px;align-items:center;font-family:var(--stencil);font-size:14px;letter-spacing:.18em}
+  .nav__links a{position:relative;padding:6px 0}
+  .nav__links a:hover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--yellow)}
+  .nav__lang{display:flex;align-items:center;gap:0;font-family:var(--mono);font-size:12px;letter-spacing:.1em;border:1px solid currentColor}
+  .nav__lang button{padding:6px 10px;font-family:inherit;font-size:inherit;letter-spacing:inherit}
+  .nav__lang button.active{background:var(--yellow);color:#000}
+  .nav.scrolled .nav__lang button.active{background:var(--blue);color:#fff}
+  .nav__hamb{display:none;width:40px;height:40px;border:1px solid currentColor;align-items:center;justify-content:center}
+  .nav__hamb span{display:block;width:18px;height:2px;background:currentColor;position:relative}
+  .nav__hamb span::before,.nav__hamb span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor}
+  .nav__hamb span::before{top:-6px}
+  .nav__hamb span::after{top:6px}
+
+  @media (max-width:860px){
+    .nav{padding:14px 18px}
+    .nav__links{display:none}
+    .nav__hamb{display:flex}
+    .mobile-open .nav__links{
+      display:flex;flex-direction:column;
+      position:fixed;inset:64px 0 0 0;background:var(--ink);color:var(--paper);
+      padding:32px;gap:24px;font-size:24px;
+    }
+  }
+
+  /* -------- hero -------- */
+  .hero{
+    position:relative;min-height:100vh;min-height:100svh;
+    background:#000;color:#fff;
+    overflow:hidden;
+    display:flex;align-items:flex-end;
+    padding:120px 32px 80px;
+  }
+  .hero__bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at 70% 30%, rgba(255,213,0,.08), transparent 60%),
+      linear-gradient(180deg, #0a0a0a 0%, #000 100%);
+  }
+  .hero__video{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    z-index:0;opacity:.55;filter:contrast(1.05);pointer-events:none;
+    transition:opacity .6s;
+  }
+  /* simulated stage-light streaks */
+  .hero__bg::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.02) 0 2px, transparent 2px 8px),
+      radial-gradient(circle at 20% 80%, rgba(255,255,255,.06), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(255,213,0,.04), transparent 35%);
+  }
+  .hero__bg::after{
+    /* film grain */
+    content:"";position:absolute;inset:0;opacity:.4;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.6'/></svg>");
+  }
+  .hero__vignette{
+    position:absolute;inset:0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.5), rgba(0,0,0,.2) 30%, rgba(0,0,0,.7) 100%),
+      radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,.6) 100%);
+    pointer-events:none;
+  }
+  .hero__inner{position:relative;width:100%;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end}
+  .hero__copy{max-width:760px}
+  .hero__wordmark{width:min(680px,90%);margin-bottom:32px;filter:invert(1)}
+  .hero__tagline{
+    font-family:var(--stencil);text-transform:uppercase;
+    font-size:clamp(28px,4vw,44px);line-height:1.05;letter-spacing:.02em;
+    margin-bottom:36px;
+    border-left:4px solid var(--yellow);padding-left:18px;
+  }
+  .hero__manifesto p{
+    font-size:clamp(15px,1.15vw,17px);
+    margin-bottom:14px;color:#e8e8e8;max-width:62ch;
+  }
+  .hero__manifesto p:first-child{font-weight:700;color:#fff}
+  .hero__partners{
+    margin-top:24px;font-family:var(--mono);font-size:12px;color:#bbb;letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .hero__partners a{border-bottom:1px solid var(--yellow);color:#fff}
+  .hero__nextshow{
+    border:1px solid #fff;padding:18px 22px;min-width:280px;
+    background:rgba(0,0,0,.4);backdrop-filter:blur(2px);
+  }
+  .hero__nextshow__label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--yellow);text-transform:uppercase}
+  .hero__nextshow__date{font-family:var(--stencil);font-size:32px;line-height:1;margin:8px 0 4px}
+  .hero__nextshow__where{font-size:14px;color:#ccc;margin-bottom:14px}
+  .hero__nextshow__btn{
+    display:inline-block;padding:10px 16px;background:var(--yellow);color:#000;
+    font-family:var(--stencil);letter-spacing:.15em;font-size:14px;text-transform:uppercase;
+  }
+  .hero__nextshow__btn:hover{background:#fff}
+  .scrollcue{
+    position:absolute;left:50%;bottom:24px;transform:translateX(-50%);
+    width:24px;height:24px;border-right:2px solid #fff;border-bottom:2px solid #fff;
+    transform:translateX(-50%) rotate(45deg);
+    animation:bounce 2s infinite;opacity:.8;
+  }
+  @keyframes bounce{0%,100%{transform:translate(-50%,0) rotate(45deg)}50%{transform:translate(-50%,8px) rotate(45deg)}}
+
+  @media (max-width:860px){
+    .hero{padding:110px 18px 60px}
+    .hero__inner{grid-template-columns:1fr}
+    .hero__nextshow{min-width:0}
+  }
+
+  /* -------- section scaffold -------- */
+  section.block{padding:120px 32px;position:relative}
+  .block--ink{background:var(--ink);color:var(--paper)}
+  .block--paper{background:var(--paper);color:var(--ink)}
+  .container{max-width:1280px;margin:0 auto}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--mute);margin-bottom:14px;display:flex;align-items:center;gap:14px}
+  .eyebrow::before{content:"";display:inline-block;width:32px;height:1px;background:currentColor}
+  .block--ink .eyebrow{color:#888}
+  .h1{font-family:var(--stencil);text-transform:uppercase;font-size:clamp(48px,8vw,128px);line-height:.92;letter-spacing:.01em;margin-bottom:24px}
+  .lede{font-size:clamp(16px,1.2vw,19px);max-width:640px;color:var(--mute);margin-bottom:48px}
+  .block--ink .lede{color:#aaa}
+  @media (max-width:860px){section.block{padding:80px 18px}}
+
+  /* -------- buttons -------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 24px;background:var(--ink);color:var(--paper);
+    font-family:var(--stencil);text-transform:uppercase;letter-spacing:.18em;font-size:15px;
+    border:1px solid var(--ink);transition:transform .15s, background .15s;
+  }
+  .btn:hover{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+  .btn--ghost{background:transparent;color:var(--ink)}
+  .btn--ghost:hover{background:var(--ink);color:var(--paper)}
+  .block--ink .btn{background:var(--paper);color:var(--ink)}
+  .block--ink .btn:hover{background:var(--yellow);color:var(--ink)}
+  .block--ink .btn--ghost{background:transparent;color:var(--paper);border-color:var(--paper)}
+  .block--ink .btn--ghost:hover{background:var(--paper);color:var(--ink)}
+  .arrow{display:inline-block;transform:translateY(-1px)}
+
+  /* -------- feed (events × media, full-bleed, 2 columns) -------- */
+  .feed-block{padding-left:0;padding-right:0;background:#000}
+  .feed-block .container{padding-left:32px;padding-right:32px}
+  @media (max-width:860px){.feed-block .container{padding-left:18px;padding-right:18px}}
+  .feed__head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;gap:24px;flex-wrap:wrap}
+  .feed-split{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#000}
+  @media (max-width:900px){.feed-split{grid-template-columns:1fr}}
+  .feed-col{background:#000;position:relative;overflow:hidden}
+  .feed-col__fade{
+    position:absolute;left:0;right:0;bottom:0;height:200px;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.95) 70%, #000 100%);
+    pointer-events:none;display:none;z-index:3;
+  }
+  .feed-col--clipped .feed-col__fade{display:block}
+  .feed-col__head{
+    padding:20px 24px;background:#0a0a0a;
+    display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+    border-bottom:1px solid #1a1a1a;
+    position:sticky;top:0;z-index:5;
+  }
+  .feed-col__head h3{
+    font-family:var(--stencil);text-transform:uppercase;
+    font-size:22px;letter-spacing:.04em;color:#fff;font-weight:700;
+  }
+  .feed-col__head em{
+    font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+    color:#888;text-transform:uppercase;
+  }
+  .feed{
+    column-count:2; column-gap:2px;
+    padding:2px;
+    background:#000;
+    margin-top:0;
+  }
+  /* left column as a year-grouped event list */
+  .feedlist{display:flex;flex-direction:column;background:#000;color:#fff}
+  .feedlist__year{
+    padding:28px 28px 12px;
+    font-family:var(--stencil);text-transform:uppercase;
+    font-size:36px;letter-spacing:.05em;color:#fff;line-height:1;
+    border-bottom:1px solid #222;background:#0a0a0a;
+  }
+  .feedlist__row{
+    display:grid;grid-template-columns:130px 1fr auto;gap:24px;align-items:center;
+    padding:18px 28px;border-bottom:1px solid #1a1a1a;
+    background:#000;color:#fff;text-align:left;cursor:pointer;
+    transition:background .2s;width:100%;
+  }
+  .feedlist__row:hover{background:#0a0a0a}
+  .feedlist__poster{
+    width:130px;height:160px;background:#0a0a0a center/cover no-repeat;
+    border:1px solid #222;flex:none;
+    filter:grayscale(1) contrast(1.18) brightness(.92);transition:filter .35s ease, transform .5s ease;
+  }
+  .feedlist__row:hover .feedlist__poster{filter:none;transform:scale(1.02)}
+  .feedlist__where{min-width:0}
+  .feedlist__name{font-family:var(--stencil);text-transform:uppercase;font-size:19px;letter-spacing:.02em;line-height:1.15;color:#fff;font-weight:700}
+  .feedlist__city{font-family:var(--mono);font-size:11px;color:#888;letter-spacing:.14em;text-transform:uppercase;margin-top:8px}
+  .feedlist__date{font-family:var(--stencil);font-size:18px;letter-spacing:.05em;text-align:right;line-height:1.1;color:#ccc}
+  @media (max-width:600px){
+    .feedlist__row{grid-template-columns:96px 1fr;gap:14px;padding:14px 18px}
+    .feedlist__poster{width:96px;height:118px}
+    .feedlist__date{grid-column:2;text-align:left;margin-top:4px;font-size:14px}
+    .feedlist__year{padding:20px 18px 8px;font-size:28px}
+  }
+  @media (max-width:1500px){.feed{column-count:2}}
+  @media (max-width:1100px){.feed{column-count:2}}
+  @media (max-width:760px){.feed{column-count:2}}
+  @media (max-width:460px){.feed{column-count:1}}
+  .feed__item{
+    display:block;break-inside:avoid;margin-bottom:2px;
+    position:relative;cursor:pointer;background:#0a0a0a;overflow:hidden;width:100%;line-height:0;
+    border:0;padding:0;
+  }
+  .feed__item img{
+    width:100%;height:auto;display:block;
+    filter:grayscale(1) contrast(1.15) brightness(.94);transition:filter .35s ease, transform .6s ease;
+  }
+  .feed__item:hover img{filter:none;transform:scale(1.02)}
+  .feed__item::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.85));
+    pointer-events:none;
+  }
+  .feed__item__cap{
+    position:absolute;left:14px;right:14px;bottom:12px;z-index:1;line-height:1.25;text-align:left;
+  }
+  .feed__item__cap h3{font-family:var(--stencil);text-transform:uppercase;font-size:16px;letter-spacing:.02em;color:#fff;font-weight:700}
+  .feed__item__cap .meta{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:#ccc;text-transform:uppercase;margin-top:4px}
+  .feed__item__badge{
+    position:absolute;top:10px;left:10px;z-index:1;
+    font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+    padding:3px 7px;background:rgba(0,0,0,.7);border:1px solid #fff;color:#fff;
+  }
+  .feed__item__badge--video{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .feed__item__badge--poster{background:#fff;color:#000;border-color:#fff}
+  .feed__item__play{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:54px;height:54px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.55);opacity:0;transition:opacity .2s;z-index:1;
+  }
+  .feed__item:hover .feed__item__play{opacity:1}
+  .feed__item__play svg{width:18px;height:18px;fill:#fff}
+  /* "open full archive" link at the foot of the feed */
+  .media__more{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+    margin-top:32px;padding:24px 28px;border:1px solid #fff;color:#fff;
+    font-family:var(--stencil);text-transform:uppercase;letter-spacing:.18em;font-size:18px;
+    transition:background .2s,color .2s;
+  }
+  .media__more:hover{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .media__more__arrow{font-size:32px;line-height:1}
+
+  /* -------- live -------- */
+  .live__cols{display:grid;grid-template-columns:1.3fr 1fr;gap:64px}
+  @media (max-width:860px){.live__cols{grid-template-columns:1fr;gap:48px}}
+  /* live log */
+  .livelog__head{
+    font-family:var(--stencil);text-transform:uppercase;font-size:18px;letter-spacing:.18em;
+    margin-bottom:14px;display:flex;align-items:center;gap:10px;
+  }
+  .livelog__head .dot{width:10px;height:10px;background:var(--yellow);border-radius:50%;display:inline-block;animation:pulse 2.4s ease-in-out infinite}
+  .livelog__head .dot--past{background:#666;animation:none}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+  .livelog{display:flex;flex-direction:column}
+  .show{
+    display:grid;grid-template-columns:84px 1fr auto;gap:18px;align-items:center;
+    padding:14px 0;border-top:1px solid #333;
+  }
+  .show:last-child{border-bottom:1px solid #333}
+  .show__poster{
+    width:84px;height:84px;background:#222 center/cover no-repeat;
+    border:1px solid #444;flex:none;filter:grayscale(1) contrast(1.18) brightness(.95);
+  }
+  .show__poster--placeholder{
+    background:repeating-linear-gradient(45deg,#1a1a1a 0 6px,#222 6px 12px);
+  }
+  .show__where{font-size:15px;min-width:0}
+  .show__where .v{font-weight:700;display:block;font-size:16px;line-height:1.2}
+  .show__where .c{color:#aaa;font-size:11px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-top:4px;display:block}
+  .show__date{font-family:var(--stencil);font-size:18px;letter-spacing:.05em;text-align:right;line-height:1.1}
+  .show__date small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#888;margin-top:4px;font-weight:400}
+  .show__time{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--yellow);background:rgba(255,213,0,.08);padding:2px 7px;border:1px solid rgba(255,213,0,.4)}
+  .show--upcoming{
+    background:linear-gradient(90deg,rgba(255,213,0,.06),transparent 60%);
+    border-top:1px solid var(--yellow) !important;border-bottom:1px solid var(--yellow);padding:18px 12px;
+  }
+  .show--upcoming .show__date{color:var(--yellow)}
+  .rider-link{margin-top:18px;padding-top:14px;border-top:1px dashed #555}
+  .rider-link a{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#aaa}
+  .rider-link a:hover{color:var(--yellow)}
+  .empty-state{
+    border:1px dashed currentColor;padding:40px;text-align:center;
+    font-family:var(--mono);font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:#888;
+  }
+  .book{
+    border:1px solid currentColor;padding:32px;
+    background:repeating-linear-gradient(-45deg, transparent 0 10px, rgba(255,255,255,.02) 10px 11px);
+  }
+  .book h3{font-family:var(--stencil);text-transform:uppercase;font-size:28px;letter-spacing:.04em;margin-bottom:14px}
+  .book p{margin-bottom:22px;color:#bbb;max-width:36ch}
+  @media (max-width:860px){.show{grid-template-columns:1fr;gap:6px}}
+
+  /* -------- people -------- */
+  .people__grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;background:var(--ink);border:1px solid var(--ink)}
+  @media (max-width:1100px){.people__grid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:680px){.people__grid{grid-template-columns:repeat(2,1fr)}}
+  .member{background:var(--paper);padding:24px;display:flex;flex-direction:column;gap:12px}
+  .member__photo{
+    aspect-ratio:1/1;background:#000;position:relative;overflow:hidden;
+    background-image:
+      radial-gradient(circle at 50% 35%, #2a2a2a 0 30%, transparent 31%),
+      radial-gradient(ellipse at 50% 95%, #2a2a2a 0 50%, transparent 51%),
+      linear-gradient(180deg, #0a0a0a, #1a1a1a);
+  }
+  .member__photo--real{
+    background-size:cover !important;
+    background-position:center !important;
+    background-repeat:no-repeat !important;
+    filter:contrast(1.05);
+  }
+  .member__photo--real::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,.18) 100%);
+    pointer-events:none;
+  }
+  /* featured vocalist (Karolina) */
+  .featured{
+    margin-top:32px;display:grid;grid-template-columns:240px 1fr;gap:32px;
+    border:1px solid var(--ink);background:var(--paper);
+    background:linear-gradient(135deg, rgba(255,213,0,.06), rgba(0,87,183,.04));
+  }
+  .featured__photo{
+    aspect-ratio:1/1;background:#000;position:relative;overflow:hidden;
+    background-size:cover;background-position:center;
+  }
+  .featured__placeholder{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:
+      linear-gradient(135deg,#1a1a1a,#000),
+      repeating-linear-gradient(45deg, rgba(255,213,0,.04) 0 10px, transparent 10px 20px);
+    color:var(--yellow);font-family:var(--stencil);font-size:200px;font-weight:700;line-height:1;
+  }
+  .featured__placeholder .g{opacity:.7}
+  .featured__body{padding:28px 32px 28px 0;display:flex;flex-direction:column;justify-content:center;gap:10px}
+  .featured__eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.25em;text-transform:uppercase;
+    color:#000;background:var(--yellow);padding:4px 10px;display:inline-block;width:fit-content;
+  }
+  .featured__name{font-family:var(--stencil);text-transform:uppercase;font-size:54px;letter-spacing:.04em;line-height:1;font-weight:700}
+  .featured__bio{font-size:15px;color:#333;max-width:62ch;line-height:1.55}
+  .featured__stat{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#666;
+    border-top:1px solid #ddd;padding-top:10px;margin-top:6px;
+  }
+  @media (max-width:860px){
+    .featured{grid-template-columns:1fr}
+    .featured__body{padding:24px}
+    .featured__name{font-size:38px}
+  }
+  .member__photo::after{
+    content:"PORTRAIT";position:absolute;left:8px;bottom:8px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.25em;color:#666;
+  }
+  .member__name{font-family:var(--stencil);text-transform:uppercase;font-size:22px;letter-spacing:.04em;margin-top:4px}
+  .member__role{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+  .member__role.featured{color:var(--ink);background:var(--yellow);padding:3px 6px;display:inline-block;width:fit-content}
+  .member__bio{font-size:14px;color:#444;line-height:1.5}
+
+  /* -------- support -------- */
+  .charity-list{display:flex;flex-direction:column;gap:0;border-top:1px solid currentColor}
+  .charity{
+    display:grid;grid-template-columns:60px 1fr auto;gap:24px;align-items:center;
+    padding:28px 0;border-bottom:1px solid currentColor;
+    transition:padding .2s;
+  }
+  .charity:hover{padding-left:8px}
+  .charity__num{font-family:var(--mono);font-size:13px;letter-spacing:.15em;color:var(--mute)}
+  .block--ink .charity__num{color:#777}
+  .charity__main h3{font-family:var(--stencil);text-transform:uppercase;font-size:28px;letter-spacing:.03em;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .charity__main h3 .badge{
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+    background:var(--yellow);color:#000;padding:3px 7px;
+    -webkit-text-stroke:0;
+  }
+  .charity__desc{font-size:14px;color:#bbb;margin-top:6px;max-width:60ch}
+  @media (max-width:680px){
+    .charity{grid-template-columns:1fr;gap:8px;padding:22px 0}
+    .charity__main h3{font-size:22px}
+  }
+
+  /* -------- contact -------- */
+  .contact{text-align:center;max-width:560px;margin:0 auto}
+  .contact__buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+
+  /* -------- footer -------- */
+  footer{background:#000;color:#fff;padding:64px 32px 28px}
+  .foot__top{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;
+    padding-bottom:48px;border-bottom:1px solid #222;
+  }
+  @media (max-width:860px){.foot__top{grid-template-columns:1fr 1fr;gap:32px}}
+  .foot__brand .glyph{width:120px;height:60px;filter:invert(1) brightness(2);margin-bottom:14px}
+  .foot__brand p{color:#888;font-size:14px;max-width:32ch}
+  .foot__col h4{font-family:var(--stencil);font-size:14px;letter-spacing:.2em;color:#888;margin-bottom:14px;text-transform:uppercase}
+  .foot__col a{display:block;padding:4px 0;color:#ccc;font-size:14px}
+  .foot__col a:hover{color:var(--yellow)}
+  .foot__bot{
+    max-width:1280px;margin:24px auto 0;
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:11px;letter-spacing:.15em;color:#666;text-transform:uppercase;
+    flex-wrap:wrap;gap:12px;
+  }
+
+  /* -------- lightbox -------- */
+  .lb{
+    position:fixed;inset:0;z-index:100;
+    background:rgba(0,0,0,.95);
+    display:none;align-items:center;justify-content:center;
+    padding:32px;
+  }
+  .lb.open{display:flex}
+  .lb__inner{
+    max-width:none;width:100%;height:100%;color:#fff;position:relative;
+    display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;
+    gap:12px;
+  }
+  .lb__head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;flex:0 0 auto}
+  .lb__title{font-family:var(--stencil);text-transform:uppercase;font-size:28px;letter-spacing:.03em}
+  .lb__sub{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:#aaa;text-transform:uppercase;margin-top:6px}
+  .lb__close{
+    position:absolute;top:0;right:0;
+    width:40px;height:40px;border:1px solid #fff;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:var(--stencil);font-size:18px;z-index:2;
+  }
+  .lb__close:hover{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .lb__stage{
+    flex:1 1 auto;min-height:0;background:#0a0a0a;position:relative;overflow:hidden;
+    border:1px solid #222;
+    display:flex;align-items:center;justify-content:center;
+    color:#444;font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+  }
+  .lb__stage img, .lb__stage video{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;background:#000}
+  .lb__stage--empty{
+    background-image:repeating-linear-gradient(45deg, #1a1a1a 0 12px, #0a0a0a 12px 24px);
+  }
+  .lb__nav{display:flex;justify-content:flex-end;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#666;text-transform:uppercase}
+
+  /* -------- reveal -------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .scrollcue{animation:none}
+  }
+
+  /* lang fade */
+  [data-en],[data-ua]{display:none}
+  html[lang="en"] [data-en]{display:revert}
+  html[lang="ua"] [data-ua]{display:revert}
+  html[lang="en"] [data-en="inline"]{display:inline}
+  html[lang="ua"] [data-ua="inline"]{display:inline}
+
+  /* skip links/focus */
+  :focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav__brand" aria-label="U3ZUB home">
+    <!-- mini stencil glyph: simplified U3ZUB stencil block -->
+    <svg class="glyph" viewBox="0 0 120 40" aria-hidden="true">
+      <text x="0" y="32" font-family="Stardos Stencil" font-size="36" font-weight="700" fill="currentColor" letter-spacing="2">U3ZUB</text>
+    </svg>
+  </a>
+  <div class="nav__links" id="navLinks">
+    <a href="#live">LIVE</a>
+    <a href="#feed">ARCHIVE</a>
+    <a href="#people">PEOPLE</a>
+    <a href="#support">SUPPORT</a>
+    <a href="#contact">CONTACT</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="nav__lang" role="group" aria-label="Language">
+      <button data-lang="en" class="active">EN</button>
+      <button data-lang="ua">UA</button>
+    </div>
+    <button class="nav__hamb" id="hamb" aria-label="Menu"><span></span></button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <video class="hero__video" autoplay muted loop playsinline webkit-playsinline disablepictureinpicture aria-hidden="true" preload="auto" poster="assets/hero/hero-1.jpg">
+    <source src="assets/hero/hero-1.mp4" type="video/mp4" />
+  </video>
+  <div class="hero__vignette" aria-hidden="true"></div>
+  <div class="hero__inner container">
+    <div class="hero__copy">
+      <img src="assets/wordmark.jpg" alt="U3ZUB" class="hero__wordmark" />
+      <h1 class="hero__tagline">
+        <span data-en>Ukrainian rock<br/>for the free world.</span>
+        <span data-ua>Український рок<br/>за вільний світ.</span>
+      </h1>
+      <div class="hero__manifesto">
+        <div data-en>
+          <p>U3ZUB was born with the war.</p>
+          <p>Since 2022 we have played to keep one truth alive: this is not Ukraine's war alone. It is the free world's fight against authoritarianism.</p>
+          <p>If Ukraine wins, the order that protects all of us holds. If Ukraine falls, Europe is next, and the world that took eighty years to build comes apart.</p>
+          <p>We play Ukrainian songs in rock arrangements — folklore, anthems of resistance, our own takes on the songs that shaped us — because culture is one of the things they came to destroy, and one of the things we will not let them.</p>
+        </div>
+        <div data-ua>
+          <p>U3ZUB народився з війною.</p>
+          <p>З 2022-го ми граємо, щоб тримати одну правду живою: це війна не лише України. Це боротьба вільного світу проти авторитаризму.</p>
+          <p>Якщо Україна переможе — світ, який захищає нас усіх, встоїть. Якщо Україна впаде — далі буде Європа, а світовий порядок, який будували вісімдесят років, посиплеться.</p>
+          <p>Ми граємо українські пісні в рок-аранжуваннях — фольклор, гімни спротиву, свої версії пісень, які нас сформували — бо культура є одним із того, що вони прийшли знищити. І одним із того, чого ми їм не віддамо.</p>
+        </div>
+      </div>
+      <p class="hero__partners">
+        <span data-en>In partnership with</span><span data-ua>У партнерстві з</span>
+        <a href="https://houseofukraine.org/" target="_blank" rel="noopener">House of Ukraine</a>
+        <span data-en="inline">and</span><span data-ua="inline">і</span>
+        <a href="https://shieldoffreedom.org/" target="_blank" rel="noopener">Shield of Freedom</a>.
+      </p>
+    </div>
+    <aside class="hero__nextshow" aria-label="Next show">
+      <div class="hero__nextshow__label"><span data-en>Next show</span><span data-ua>Найближчий концерт</span></div>
+      <div class="hero__nextshow__date">MAY 2</div>
+      <div class="hero__nextshow__where">HPR Ethnic Food Fair · Balboa Park, San Diego</div>
+      <a href="https://houseofukraine.org/event/eff-2026/" target="_blank" rel="noopener" class="hero__nextshow__btn"><span data-en>Details</span><span data-ua>Деталі</span> →</a>
+    </aside>
+  </div>
+  <div class="scrollcue" aria-hidden="true"></div>
+</header>
+
+<!-- ============ LIVE LOG ============ -->
+<section class="block block--ink" id="live">
+  <div class="container reveal">
+    <div class="eyebrow">§ 01 / Live · Log</div>
+    <h2 class="h1">LIVE</h2>
+    <p class="lede" data-en style="margin-bottom:32px">Upcoming and the last five behind us. Posters, dates, and where we stood.</p>
+    <p class="lede" data-ua style="margin-bottom:32px">Найближчий концерт і п'ять попередніх. Афіші, дати, місця.</p>
+    <div class="live__cols" style="margin-top:24px">
+      <div>
+        <h3 class="livelog__head"><span class="dot"></span><span data-en>Upcoming</span><span data-ua>Найближчий</span></h3>
+        <div id="upcomingList" class="livelog livelog--upcoming"></div>
+        <h3 class="livelog__head" style="margin-top:48px"><span class="dot dot--past"></span><span data-en>Past · last five</span><span data-ua>Останні п'ять</span></h3>
+        <div id="pastList" class="livelog livelog--past"></div>
+      </div>
+      <div>
+        <div class="book">
+          <h3><span data-en>Book us</span><span data-ua>Замовити</span></h3>
+          <p data-en>Festivals, rallies, private events. We travel. We play loud. Write to us.</p>
+          <p data-ua>Фестивалі, мітинги, приватні події. Ми мобільні. Граємо гучно. Пишіть.</p>
+          <a href="https://instagram.com/u3zubmusic" target="_blank" rel="noopener" class="btn"><span data-en>DM @u3zubmusic</span><span data-ua>DM @u3zubmusic</span> <span class="arrow">→</span></a>
+          <div class="rider-link">
+            <a href="rider.html" target="_blank"><span data-en>Tech rider</span><span data-ua>Тех-райдер</span> →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ============ FEED — events × media combined, full-bleed ============ -->
+<section class="block block--ink feed-block" id="feed">
+  <div class="container">
+    <div class="feed__head reveal">
+      <div>
+        <div class="eyebrow">§ 02 / Where we played × What we filmed</div>
+        <h2 class="h1"><span data-en>WHERE WE PLAYED.<br/>WHAT WE FILMED.</span><span data-ua>ДЕ МИ ГРАЛИ.<br/>ЩО МИ ЗНЯЛИ.</span></h2>
+      </div>
+      <p class="lede" data-en style="margin-bottom:0;text-align:right;max-width:48ch">Every festival, rally, and parade. Every clip and photo we kept. Click anything: posters open in full color, tapes play.</p>
+      <p class="lede" data-ua style="margin-bottom:0;text-align:right;max-width:48ch">Кожен фестиваль, мітинг, парад. Кожен запис і фото, що збереглися. Тисни: афіші — у повному кольорі, записи — грають.</p>
+    </div>
+  </div>
+  <div class="feed-split reveal">
+    <div class="feed-col">
+      <div class="feed-col__head">
+        <h3><span data-en>WHERE WE PLAYED</span><span data-ua>ДЕ МИ ГРАЛИ</span></h3>
+        <em><span data-en>Past shows · by year</span><span data-ua>Минулі концерти · за роками</span></em>
+      </div>
+      <div class="feedlist" id="feedPosters"></div>
+      <div class="feed-col__fade"></div>
+    </div>
+    <div class="feed-col">
+      <div class="feed-col__head">
+        <h3><span data-en>WHAT WE FILMED</span><span data-ua>ЩО МИ ЗНЯЛИ</span></h3>
+        <em><span data-en>Tapes & photos</span><span data-ua>Записи та фото</span></em>
+      </div>
+      <div class="feed" id="feedFilms"></div>
+      <div class="feed-col__fade"></div>
+    </div>
+  </div>
+  <div class="container" style="margin-top:32px">
+    <a href="archive.html" class="media__more">
+      <span class="media__more__lbl"><span data-en>Open full archive</span><span data-ua>Відкрити повний архів</span></span>
+      <span class="media__more__arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ PEOPLE ============ -->
+<section class="block block--paper" id="people">
+  <div class="container reveal">
+    <div class="eyebrow">§ 03 / People</div>
+    <h2 class="h1"><span data-en>THE BAND</span><span data-ua>ГУРТ</span></h2>
+    <p class="lede" data-en>Five musicians. One language. Many fronts.</p>
+    <p class="lede" data-ua>П'ять музикантів. Одна мова. Багато фронтів.</p>
+    <div class="people__grid" id="peopleGrid"></div>
+    <div class="featured" id="featuredCard"></div>
+  </div>
+</section>
+
+<!-- ============ SUPPORT ============ -->
+<section class="block block--ink" id="support">
+  <div class="container reveal">
+    <div class="eyebrow">§ 04 / Support</div>
+    <h2 class="h1"><span data-en>STAND WITH<br/>UKRAINE</span><span data-ua>СТАНЬ НА БІК<br/>УКРАЇНИ</span></h2>
+    <p class="lede" data-en>These are the funds we trust. If our music moves you, move them too.</p>
+    <p class="lede" data-ua>Це фонди, яким ми довіряємо. Якщо наша музика тебе зачепила — переказуй їм.</p>
+    <div class="charity-list" id="charityList"></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="block block--paper" id="contact">
+  <div class="container reveal contact">
+    <div class="eyebrow" style="justify-content:center">§ 05 / Contact</div>
+    <h2 class="h1">CONTACT</h2>
+    <p class="lede" style="margin:0 auto 0" data-en>That's it. No form. Just write.</p>
+    <p class="lede" style="margin:0 auto 0" data-ua>Все. Без форм. Просто напиши.</p>
+    <div class="contact__buttons">
+      <a href="https://instagram.com/u3zubmusic" target="_blank" rel="noopener" class="btn">@u3zubmusic →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="foot__top">
+    <div class="foot__brand">
+      <img src="assets/wordmark.jpg" alt="U3ZUB" class="glyph" />
+      <p data-en>Ukrainian rock for the free world. A band, an archive, a refusal.</p>
+      <p data-ua>Український рок за вільний світ. Гурт, архів, спротив.</p>
+    </div>
+    <div class="foot__col">
+      <h4>Sections</h4>
+      <a href="#live">Live</a>
+      <a href="#feed">Archive</a>
+      <a href="#people">People</a>
+      <a href="#support">Support</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="foot__col">
+      <h4>Reach</h4>
+      <a href="https://instagram.com/u3zubmusic" target="_blank" rel="noopener">@u3zubmusic</a>
+      <a href="archive.html">Media archive</a>
+    </div>
+    <div class="foot__col">
+      <h4>Language</h4>
+      <a href="#" data-langlink="en">English</a>
+      <a href="#" data-langlink="ua">Українська</a>
+    </div>
+  </div>
+  <div class="foot__bot">
+    <div>© <span id="year"></span> U3ZUB · ALL RIGHTS RESERVED</div>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <div class="lb__inner">
+    <button class="lb__close" id="lbClose" aria-label="Close">×</button>
+    <div class="lb__head">
+      <div>
+        <div class="lb__title" id="lbTitle">EVENT NAME</div>
+        <div class="lb__sub" id="lbSub">DATE · CITY</div>
+      </div>
+    </div>
+    <div class="lb__stage" id="lbStage">[ media placeholder ]</div>
+    <div class="lb__nav">
+      <span>ESC <span data-en>to close</span><span data-ua>щоб закрити</span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== data ===== */
+/* Events — chronological, newest first. Posters live at assets/posters/. */
+const EVENTS = [
+  {id:'dc-summit-26', name_en:'8th Ukraine Action Summit', name_ua:'8-й Український Саміт', date:'APR 2026', city:'Washington, D.C.', poster:null, cover:'assets/team/team-2.jpeg'},
+  {id:'arizona-fest-26', name_en:'Arizona Ukrainian Fest · 1st Annual', name_ua:'Перший Український фестиваль Аризони', date:'JAN 2026', city:'Phoenix, AZ', poster:'assets/posters/arizona-2026.jpg'},
+  {id:'mlk-2026', name_en:'44th Annual MLK Jr. Parade', name_ua:'44-й Парад на честь Мартіна Лютера Кінґа', date:'JAN 2026', city:'San Diego, CA', poster:null, cover:'assets/posters/mlk-2026.jpg'},
+  {id:'hpr-90', name_en:'House of Pacific Relations 90th Anniversary', name_ua:'90 років Дому міжнародних відносин', date:'SEP 2025', city:'Balboa Park, San Diego', poster:'assets/posters/poster16.png'},
+  {id:'uafest-2025', name_en:'Ukrainian Festival 2025 — Lawn Program', name_ua:'Український Фестиваль 2025', date:'AUG 2025', city:'House of Ukraine, San Diego', poster:'assets/posters/poster21.png'},
+  {id:'escondido-25', name_en:'U3zub & Taras Filenko · Escondido Library', name_ua:'U3zub і Тарас Філенко · Бібліотека Ескондідо', date:'APR 2025', city:'Escondido, CA', poster:'assets/posters/poster13.png'},
+  {id:'believe-ua', name_en:'Believe in Ukraine — 10th Anniv. of Resilience', name_ua:'Віримо в Україну — 10 років стійкості', date:'FEB 2025', city:'Central Library, San Diego', poster:'assets/posters/poster8.png'},
+  {id:'la-mint', name_en:'Concert for Ukraine · Fundraiser', name_ua:'Концерт для України · Фандрейзер', date:'DEC 2024', city:'The Mint, Los Angeles', poster:'assets/posters/poster3.png'},
+  {id:'xmas-fest', name_en:'International Christmas Festival', name_ua:'Міжнародний різдвяний фестиваль', date:'DEC 2024', city:'House of Ukraine, San Diego', poster:'assets/posters/poster17.png'},
+  {id:'uketober', name_en:'Uketober Fest (with TNMK)', name_ua:'Uketober Fest (з TNMK)', date:'AUG 2024', city:'Chicago, IL', poster:'assets/posters/poster10.png'},
+  {id:'beer-bandages', name_en:'Shield of Freedom · Beer & Bandages', name_ua:'Shield of Freedom · Пиво й бинти', date:'AUG 2024', city:'Kilowatt Brewery, San Diego', poster:'assets/posters/poster11.png'},
+  {id:'rally-aug', name_en:"Don't Abandon Ukraine · Rally", name_ua:'Не покидайте Україну · Мітинг', date:'AUG 2024', city:'Balboa Park, San Diego', poster:'assets/posters/poster12.png'},
+  {id:'escondido-24', name_en:'U3zub Concert · Escondido Library', name_ua:'Концерт U3zub · Бібліотека Ескондідо', date:'JUL 2024', city:'Escondido, CA', poster:'assets/posters/poster4.png'},
+  {id:'december-nights-23', name_en:'Balboa Park December Nights', name_ua:'Грудневі ночі в Балбоа-парку', date:'DEC 2023', city:'House of Ukraine, San Diego', poster:'assets/posters/poster18.png'},
+  {id:'uafest-2023', name_en:'Ukrainian Festival 2023 — Lawn Program', name_ua:'Український Фестиваль 2023', date:'SEP 2023', city:'House of Ukraine, San Diego', poster:'assets/posters/poster7.png'},
+  {id:'skryabin', name_en:'Скрябін Tribute · Special Guest', name_ua:'Трибют Скрябіну · Спеціальний гість', date:'AUG 2023', city:"Winston's, Ocean Beach, San Diego", poster:'assets/posters/poster.jpg'},
+  {id:'ivana-kupala', name_en:'Ivana Kupala', name_ua:'Івана Купала', date:'JUN 2023', city:'Mission Bay, San Diego', poster:'assets/posters/poster19.png'},
+  {id:'ethnic-food', name_en:'40th Annual Ethnic Food Fair', name_ua:'40-й Етнічний фестиваль їжі', date:'MAY 2023', city:'Balboa Park, San Diego', poster:'assets/posters/poster20.png'},
+];
+
+/* Live log — split into upcoming + past. */
+const UPCOMING = [
+  {
+    date:'MAY 2 · 2026',
+    time:'2:30 PM',
+    venue:'HPR Ethnic Food Fair · Balboa Park',
+    city:'San Diego, CA',
+    poster:'assets/posters/poster20.png',
+    url:'https://houseofukraine.org/event/eff-2026/'
+  },
+  {
+    date:'MAY 17 · 2026',
+    time:'4:30–8:00 PM',
+    venue:'Nautilus Room (guitars only · with Zoli)',
+    city:'Coronado, CA',
+    poster:null,
+    url:''
+  },
+];
+const PAST = EVENTS.slice(0, 5); // most recent 5 from EVENTS, used for the "last five" log
+
+/* Confirmed roster + featured */
+const MEMBERS = [
+  {name:'Oleksandr Dubovenko', role_en:'Frontman · Vocals · Acoustic guitar', role_ua:'Фронтмен · Вокал · Акустична гітара', bio_en:'Frontman and acoustic guitar. Raised on Ukrainian folk music and steeped in the Beatles, Queen and Pink Floyd. One of U3zub\'s founding members — on a mission to bring modern Ukrainian music to American audiences through originals and covers.', bio_ua:'Фронтмен і акустична гітара. Виріс на українській народній музиці, ввібрав The Beatles, Queen і Pink Floyd. Один із засновників U3zub — несе сучасну українську музику американській публіці через оригінальні пісні й кавери.', photo:'assets/people/portraits/oleksandr.jpg'},
+  {name:'Kostiantyn Dubovenko', role_en:'Electric guitar · Backing vocals', role_ua:'Електрогітара · Бек-вокал', bio_en:'Plays guitar like he owes someone money and the only currency they accept is solos.', bio_ua:'Грає на гітарі так, ніби винен комусь грошей, а той бере лише соло.', photo:'assets/people/portraits/kos.jpg'},
+  {name:'Stanislav Synko', role_en:'Bass guitar', role_ua:'Бас-гітара', bio_en:'Holds down the low end and the spreadsheet. If you can feel it in your chest, it was probably his fault.', bio_ua:'Тримає низи й електронні таблиці. Якщо щось гуде в грудях — це, скоріш за все, його провина.', photo:'assets/people/portraits/stanislav.jpg'},
+  {name:'Mark Wilson', role_en:'Drums', role_ua:'Барабани', bio_en:'The only American in the band. Learned the Ukrainian word for "louder" first, the rest is still pending.', bio_ua:'Єдиний американець у складі. Перше українське слово, яке вивчив, — «голосніше». Решта — в процесі.', photo:'assets/people/portraits/mark.jpg'},
+  {name:'Khrystyna', role_en:'Keyboards · Backing vocals', role_ua:'Клавішні · Бек-вокал', bio_en:'Plays the keys, sings the harmonies, and quietly remembers everything everyone has ever forgotten on stage.', bio_ua:'Грає на клавішах, веде гармонії, і тихо пам\'ятає все, що інші забули на сцені.', photo:'assets/people/portraits/khrystyna.jpg'},
+];
+const FEATURED = {
+  name:'Karolina',
+  role_en:'Featured Vocalist',
+  role_ua:'Запрошена вокалістка',
+  bio_en:'Performs the Ukrainian anthem and bilingual covers (EN+UA). The youngest voice on stage; the loudest reaction in the crowd.',
+  bio_ua:'Виконує гімн України та двомовні кавери (англійською й українською). Наймолодший голос на сцені — найгучніша реакція залу.',
+  stat:'206K views · viral 2024',
+  statUrl:'https://x.com/igorsushko/status/1816286828317839440',
+  photo:null
+};
+const CHARITIES = [
+  {name:'Come Back Alive', sub:'Повернись Живим', desc_en:"Largest transparent fund supplying Ukraine's armed forces since 2014.", desc_ua:'Найбільший прозорий фонд для Сил оборони з 2014.', url:'https://savelife.in.ua/en/'},
+  {name:'United24', sub:'', desc_en:'Official platform of the President of Ukraine. Defense, medical aid, reconstruction.', desc_ua:'Офіційна платформа Президента України. Оборона, медицина, відбудова.', url:'https://u24.gov.ua/'},
+  {name:'Prytula Foundation', sub:'', desc_en:'Targeted equipment campaigns; the "people\u2019s quartermaster."', desc_ua:'Адресні кампанії з оснащення; «народний квартирмейстер».', url:'https://prytulafoundation.org/en'},
+  {name:'Razom for Ukraine', sub:'', desc_en:'US-based humanitarian, frontline emergency response, advocacy.', desc_ua:'Гуманітарна організація з США. Невідкладна допомога, адвокація.', url:'https://www.razomforukraine.org/'},
+  {name:'Shield of Freedom', sub:'', desc_en:'Direct aid to defenders, first responders, civilians.', desc_ua:'Пряма допомога захисникам, рятувальникам, цивільним.', url:'https://shieldoffreedom.org/', partner:true},
+  {name:'House of Ukraine', sub:'San Diego', desc_en:'Cultural museum and community in Balboa Park.', desc_ua:'Культурний музей і громада у Балбоа-парку.', url:'https://houseofukraine.org/', partner:true},
+];
+
+/* ===== render ===== */
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+/* combined feed: 2 columns — posters | tapes & photos */
+(function(){
+  const colP = $('#feedPosters');
+  const colF = $('#feedFilms');
+  if(!colP || !colF) return;
+
+  const posterItems = EVENTS.filter(e => e.poster || e.cover).map(e => ({
+    type:'poster', src: e.poster || e.cover, thumb: e.poster || e.cover,
+    title_en: e.name_en, title_ua: e.name_ua, meta: `${e.date} · ${e.city}`, ev: e
+  }));
+
+  // Vertical clips are tall; keep the count modest so column heights stay close to posters.
+  const VIDEO_SLUGS = [
+    'u3zub_-_ukraine_4k_30_alexander_dubovenko',
+    'img_2553_krystyna','img_2558_krystyna','img_2477_krystyna',
+    'img_8831_krystyna','img_2466_krystyna','img_2472_krystyna'
+  ];
+  const videoItems = VIDEO_SLUGS.map(slug => ({
+    type:'video',
+    src:`assets/clips/${slug}.mp4`, thumb:`assets/clips/thumbs/${slug}.jpg`,
+    title_en: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'UKRAINE · MUSIC VIDEO (4K)' : 'LIVE TAPE',
+    title_ua: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'УКРАЇНА · КЛІП (4K)' : 'ЖИВИЙ ЗАПИС',
+    meta: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'A. Dubovenko · master' : 'Field recording'
+  }));
+  const photoItems = [
+    {file:'band-photo.jpg', title_en:'BAND PORTRAIT', title_ua:'ПОРТРЕТ ГУРТУ'},
+    {file:'team-photo.jpg', title_en:'U3ZUB · TEAM', title_ua:'U3ZUB · КОМАНДА'},
+    {file:'team-2.jpg',     title_en:'ON STAGE',     title_ua:'НА СЦЕНІ'},
+    {file:'fb-1.jpg',       title_en:'LIVE',         title_ua:'НАЖИВО'},
+    {file:'fb-2.jpg',       title_en:'LIVE',         title_ua:'НАЖИВО'},
+  ].map(p => ({type:'photo', src:`assets/photos/${p.file}`, thumb:`assets/photos/${p.file}`, title_en:p.title_en, title_ua:p.title_ua, meta:'2025 · San Diego, CA'}));
+
+  // Films column: photos at the top (band identity), then videos
+  const filmItems = [...photoItems, ...videoItems];
+
+  function renderItem(it){
+    const btn = document.createElement('button');
+    btn.className = 'feed__item';
+    btn.setAttribute('aria-label', it.title_en);
+    const badgeCls = it.type==='video' ? 'feed__item__badge--video' : (it.type==='poster' ? 'feed__item__badge--poster' : '');
+    const playBtn = it.type==='video' ? '<div class="feed__item__play"><svg viewBox="0 0 12 12"><polygon points="3,2 10,6 3,10"/></svg></div>' : '';
+    btn.innerHTML = `
+      <img src="${it.thumb}" alt="${it.title_en}"/>
+      <span class="feed__item__badge ${badgeCls}">${it.type}</span>
+      ${playBtn}
+      <div class="feed__item__cap">
+        <h3><span data-en>${it.title_en}</span><span data-ua>${it.title_ua||it.title_en}</span></h3>
+        <div class="meta">${it.meta||''}</div>
+      </div>`;
+    btn.addEventListener('click', () => {
+      if(it.ev) openLB(it.ev);
+      else openLBMedia(it);
+    });
+    return btn;
+  }
+
+  // Left column: year-grouped list of past shows
+  function yearOf(dateStr){
+    const m = (dateStr||'').match(/(\d{4})/);
+    return m ? m[1] : '—';
+  }
+  const byYear = {};
+  posterItems.forEach(it => {
+    const y = yearOf(it.meta);
+    (byYear[y] = byYear[y] || []).push(it);
+  });
+  const years = Object.keys(byYear).sort((a,b) => b.localeCompare(a));
+  years.forEach(y => {
+    const yh = document.createElement('div');
+    yh.className = 'feedlist__year';
+    yh.textContent = y;
+    colP.appendChild(yh);
+    byYear[y].forEach(it => {
+      const row = document.createElement('button');
+      row.className = 'feedlist__row';
+      row.setAttribute('aria-label', it.title_en);
+      row.innerHTML = `
+        <div class="feedlist__poster" style="background-image:url('${it.thumb}')"></div>
+        <div class="feedlist__where">
+          <div class="feedlist__name"><span data-en>${it.title_en}</span><span data-ua>${it.title_ua||it.title_en}</span></div>
+          <div class="feedlist__city">${it.ev.city}</div>
+        </div>
+        <div class="feedlist__date">${it.ev.date.split(' ')[0]}</div>
+      `;
+      row.addEventListener('click', () => openLB(it.ev));
+      colP.appendChild(row);
+    });
+  });
+
+  // Right column: masonry of films
+  filmItems.forEach(it => colF.appendChild(renderItem(it)));
+
+  /* balance: clip the taller column to match the shorter one + fade.
+     Only meaningful when columns are side-by-side (>=900px). */
+  function balance(){
+    const wrapP = colP.parentElement;
+    const wrapF = colF.parentElement;
+    wrapP.style.maxHeight = '';
+    wrapF.style.maxHeight = '';
+    wrapP.classList.remove('feed-col--clipped');
+    wrapF.classList.remove('feed-col--clipped');
+    if(window.innerWidth < 900) return; // mobile: stacked, no clipping
+    const headH = wrapP.querySelector('.feed-col__head').offsetHeight;
+    const hP = colP.scrollHeight;
+    const hF = colF.scrollHeight;
+    if(Math.abs(hP - hF) < 60) return;
+    const target = Math.min(hP, hF);
+    if(hP > hF){
+      wrapP.style.maxHeight = (target + headH) + 'px';
+      wrapP.classList.add('feed-col--clipped');
+    } else {
+      wrapF.style.maxHeight = (target + headH) + 'px';
+      wrapF.classList.add('feed-col--clipped');
+    }
+  }
+  // re-balance whenever ANY image finishes loading, so the layout converges as content arrives
+  const allImgs = [...colP.querySelectorAll('img'), ...colF.querySelectorAll('img')];
+  let raf = null;
+  const schedule = () => {
+    if(raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => { raf = null; balance(); });
+  };
+  allImgs.forEach(img => {
+    img.addEventListener('load', schedule);
+    img.addEventListener('error', schedule);
+  });
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', () => { clearTimeout(window.__balT); window.__balT = setTimeout(balance, 150); });
+  // initial pass + a couple of safety nets
+  schedule();
+  setTimeout(schedule, 1500);
+  setTimeout(schedule, 3500);
+})();
+
+/* live log — upcoming + past, rendered into both A (ink) and B (paper) variants */
+function renderUpcoming(el){
+  if(!el) return;
+  if(!UPCOMING.length){
+    el.innerHTML = `<div class="empty-state"><span data-en>No shows announced. Follow on Instagram.</span><span data-ua>Концерти не оголошені. Слідкуй у Інстаґрамі.</span></div>`;
+    return;
+  }
+  UPCOMING.forEach(s=>{
+    const row = document.createElement('div');
+    row.className = 'show show--upcoming';
+    const poster = s.poster ? `<div class="show__poster" style="background-image:url('${s.poster}')"></div>` : `<div class="show__poster show__poster--placeholder"></div>`;
+    const timeBit = s.time ? `<span class="show__time">${s.time}</span>` : '';
+    const linkLbl = s.free ? 'INFO →' : (s.url ? 'INFO →' : '');
+    const linkBit = s.url ? `<small><a href="${s.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">${linkLbl}</a></small>` : '';
+    row.innerHTML = `
+      ${poster}
+      <div class="show__where"><span class="v">${s.venue}</span><span class="c">${s.city}</span>${timeBit}</div>
+      <div class="show__date">${s.date}${linkBit}</div>
+    `;
+    el.appendChild(row);
+  });
+}
+function renderPast(el){
+  if(!el) return;
+  PAST.forEach(e=>{
+    const row = document.createElement('div');
+    row.className = 'show';
+    const poster = e.poster ? `<div class="show__poster" style="background-image:url('${e.poster}')"></div>` :
+                    e.cover  ? `<div class="show__poster" style="background-image:url('${e.cover}')"></div>` :
+                               `<div class="show__poster show__poster--placeholder"></div>`;
+    row.innerHTML = `
+      ${poster}
+      <div class="show__where"><span class="v"><span data-en>${e.name_en}</span><span data-ua>${e.name_ua}</span></span><span class="c">${e.city}</span></div>
+      <div class="show__date">${e.date}</div>
+    `;
+    el.appendChild(row);
+  });
+}
+renderUpcoming($('#upcomingList'));
+renderPast($('#pastList'));
+
+/* hero video — coax iOS Safari into autoplay if it stalled */
+(function(){
+  const v = document.querySelector('.hero__video');
+  if(!v) return;
+  v.muted = true; v.setAttribute('muted',''); v.playsInline = true;
+  const tryPlay = () => v.play && v.play().catch(()=>{});
+  tryPlay();
+  ['touchstart','touchend','click','scroll','visibilitychange'].forEach(ev =>
+    document.addEventListener(ev, tryPlay, {once:true, passive:true})
+  );
+  // re-attempt when video metadata is ready
+  v.addEventListener('loadedmetadata', tryPlay, {once:true});
+})();
+
+
+/* members */
+const peopleEl = $('#peopleGrid');
+MEMBERS.forEach(m=>{
+  const card = document.createElement('div');
+  card.className = 'member';
+  const photo = m.photo ? `<div class="member__photo member__photo--real" style="background-image:url('${m.photo}')"></div>` : `<div class="member__photo"></div>`;
+  card.innerHTML = `
+    ${photo}
+    <div class="member__name">${m.name}</div>
+    <span class="member__role"><span data-en>${m.role_en}</span><span data-ua>${m.role_ua}</span></span>
+    <div class="member__bio"><span data-en>${m.bio_en}</span><span data-ua>${m.bio_ua}</span></div>
+  `;
+  peopleEl.appendChild(card);
+});
+
+/* featured vocalist (Karolina) */
+const featEl = document.getElementById('featuredCard');
+if(featEl && FEATURED){
+  featEl.innerHTML = `
+    <div class="featured__photo">
+      <div class="featured__placeholder"><span class="g">K</span></div>
+    </div>
+    <div class="featured__body">
+      <div class="featured__eyebrow"><span data-en>Featured Vocalist</span><span data-ua>Запрошена вокалістка</span></div>
+      <h3 class="featured__name">${FEATURED.name}</h3>
+      <p class="featured__bio"><span data-en>${FEATURED.bio_en}</span><span data-ua>${FEATURED.bio_ua}</span></p>
+      <div class="featured__stat">${FEATURED.statUrl?`<a href="${FEATURED.statUrl}" target="_blank" rel="noopener">${FEATURED.stat} ↗</a>`:FEATURED.stat}</div>
+    </div>
+  `;
+}
+
+/* charities */
+const charityEl = $('#charityList');
+CHARITIES.forEach((c,i)=>{
+  const row = document.createElement('a');
+  row.className = 'charity';
+  row.href = c.url;
+  row.target = '_blank';
+  row.rel = 'noopener';
+  row.innerHTML = `
+    <div class="charity__num">${String(i+1).padStart(2,'0')}</div>
+    <div class="charity__main">
+      <h3>${c.name}${c.sub?` <span style="color:#666;font-size:14px;font-family:var(--mono);letter-spacing:.15em">/ ${c.sub}</span>`:''}${c.partner?` <span class="badge">PARTNER</span>`:''}</h3>
+      <div class="charity__desc"><span data-en>${c.desc_en}</span><span data-ua>${c.desc_ua}</span></div>
+    </div>
+    <div class="btn btn--ghost"><span data-en>Donate</span><span data-ua>Підтримати</span> →</div>
+  `;
+  charityEl.appendChild(row);
+});
+
+/* year */
+$('#year').textContent = new Date().getFullYear();
+
+/* ===== nav scroll bg ===== */
+const nav = $('#nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > window.innerHeight - 80);
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* hamburger */
+$('#hamb').addEventListener('click', ()=>document.body.classList.toggle('mobile-open'));
+$$('#navLinks a').forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('mobile-open')));
+
+/* ===== language ===== */
+function setLang(l){
+  document.documentElement.lang = l;
+  $$('.nav__lang button').forEach(b=>b.classList.toggle('active', b.dataset.lang===l));
+  try{localStorage.setItem('u3zub.lang', l)}catch{}
+}
+$$('.nav__lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.lang)));
+$$('[data-langlink]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();setLang(a.dataset.langlink)}));
+try{const saved = localStorage.getItem('u3zub.lang'); if(saved) setLang(saved);}catch{}
+
+/* ===== reveal — fires on any pixel of intersection so very tall elements still trigger ===== */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }});
+},{threshold:0, rootMargin:'0px 0px -10% 0px'});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* ===== lightbox ===== */
+const lb = $('#lb');
+let lbSavedScroll = 0;
+function lbLockScroll(){
+  // Save scroll, freeze body without losing position (iOS-safe)
+  lbSavedScroll = window.scrollY || window.pageYOffset || 0;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${lbSavedScroll}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+}
+function lbUnlockScroll(){
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  window.scrollTo(0, lbSavedScroll);
+}
+function openLB(ev){
+  $('#lbTitle').innerHTML = `<span data-en>${ev.name_en}</span><span data-ua>${ev.name_ua}</span>`;
+  $('#lbSub').textContent = `${ev.date} · ${ev.city}`;
+  // For now we have one image per event (the original color poster, or cover photo).
+  const media = [ev.poster, ev.cover].filter(Boolean);
+  const stage = $('#lbStage');
+  if(media.length){
+    stage.classList.remove('lb__stage--empty');
+    stage.innerHTML = `<img src="${media[0]}" alt="${ev.name_en}" />`;
+  }else{
+    stage.classList.add('lb__stage--empty');
+    stage.innerHTML = `[ ${ev.name_en.toUpperCase()} · NO ART ]`;
+  }
+  lb.classList.add('open');
+  lbLockScroll();
+}
+function openLBMedia(item){
+  $('#lbTitle').innerHTML = `<span data-en>${item.title_en}</span><span data-ua>${item.title_ua||item.title_en}</span>`;
+  $('#lbSub').textContent = item.meta || '';
+  const stage = $('#lbStage');
+  stage.classList.remove('lb__stage--empty');
+  if(item.type==='video'){
+    stage.innerHTML = `<video src="${item.src}" controls autoplay playsinline preload="metadata" style="max-width:100%;max-height:100%;background:#000"></video>`;
+  } else {
+    stage.innerHTML = `<img src="${item.src}" alt="${item.title_en}" />`;
+  }
+  lb.classList.add('open');
+  lbLockScroll();
+}
+function closeLB(){
+  const v = $('#lbStage video'); if(v){ try{v.pause()}catch(_){} }
+  $('#lbStage').innerHTML = '';
+  lb.classList.remove('open');
+  lbUnlockScroll();
+}
+$('#lbClose').addEventListener('click',closeLB);
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+window.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLB();
+});
+</script>
+</body>
+</html>

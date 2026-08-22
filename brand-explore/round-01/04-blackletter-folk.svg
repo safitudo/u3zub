@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <rect width="600" height="200" fill="#fff"/>
+  <text x="300" y="140" text-anchor="middle"
+        font-family="'UnifrakturMaguntia', 'Old English Text MT', 'Blackadder ITC', serif"
+        font-size="130" font-weight="700"
+        fill="#000">U3zub</text>
+  <line x1="80" y1="160" x2="520" y2="160" stroke="#000" stroke-width="3"/>
+  <line x1="80" y1="170" x2="520" y2="170" stroke="#000" stroke-width="1"/>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <rect width="600" height="200" fill="#fff"/>
+  <g font-family="Georgia, 'Times New Roman', serif"
+     font-size="160" font-weight="700" fill="#000">
+    <text x="50"  y="150" transform="rotate(-2 80 150)">U</text>
+    <text x="150" y="150" transform="rotate(1 180 150)">3</text>
+    <text x="245" y="150" transform="rotate(-1 275 150)">Z</text>
+    <text x="345" y="150" transform="rotate(2 375 150)">U</text>
+    <text x="445" y="150" transform="rotate(-2 475 150)">B</text>
+  </g>
+  <!-- chip marks -->
+  <g fill="#fff">
+    <circle cx="92" cy="110" r="3"/>
+    <circle cx="200" cy="80" r="2"/>
+    <circle cx="300" cy="125" r="3"/>
+    <circle cx="395" cy="95" r="2"/>
+    <rect x="480" y="120" width="4" height="3"/>
+    <rect x="120" y="140" width="3" height="4"/>
+  </g>
+</svg>

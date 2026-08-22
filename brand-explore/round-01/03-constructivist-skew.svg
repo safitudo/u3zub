@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <rect width="600" height="200" fill="#fff"/>
+  <g transform="skewX(-12)">
+    <text x="320" y="155" text-anchor="middle"
+          font-family="Impact, 'Arial Black', sans-serif"
+          font-size="170" font-weight="900"
+          letter-spacing="2"
+          fill="#000">U3ZUB</text>
+  </g>
+  <rect x="20" y="40" width="20" height="140" fill="#000"/>
+  <rect x="560" y="40" width="20" height="140" fill="#000"/>
+</svg>

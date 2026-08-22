@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" width="600" height="240">
+  <rect width="600" height="240" fill="#fff"/>
+  <g transform="translate(300,200) scale(0.5,2.4)" text-anchor="middle">
+    <text x="0" y="0"
+          font-family="Impact, 'Arial Narrow', 'Arial Black', sans-serif"
+          font-size="100" font-weight="900" letter-spacing="6"
+          fill="#000">U3ZUB</text>
+  </g>
+</svg>

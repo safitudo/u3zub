@@ -1,0 +1,45 @@
+# macOS
+.DS_Store
+
+# Vercel link dirs (contain project/org ids)
+.vercel
+
+# Node
+node_modules/
+*.log
+
+# ---------------------------------------------------------------------------
+# Large media. Deliberately NOT in the repo — GitHub rejects files over 100 MB
+# and this tree carries 1.7 GB. Everything below lives on disk and is uploaded
+# straight to Vercel by `vercel deploy`, which reads the working directory.
+#
+# Cloning this repo gives you the full site EXCEPT these files. Sources:
+#   clips      ~/Movies/u3zub-archive/raw  →  brand-explore/encode-clips.sh
+#   posters    stanislav-vault, u3zub/
+#   hero video stanislav-vault, u3zub/
+#   raw people portrait sources, stanislav-vault
+#
+# Kept in the repo: clips/thumbs, hero poster frame, people/portraits,
+# photos, team, and wordmark.jpg — about 7 MB in total.
+# ---------------------------------------------------------------------------
+website/assets/clips/*.mp4
+website/assets/posters/
+website/assets/hero/*.mp4
+
+# Raw portrait reference shots (people/portraits/ is kept)
+website/assets/people/*.png
+website/assets/people/*.jpg
+website/assets/people/*.jpeg
+website/assets/people/*.JPG
+website/assets/people/*.HEIC
+
+# ---------------------------------------------------------------------------
+# brand-explore: unreleased logo iterations stay in the vault. Only the encode
+# script and the hand-authored round-01 SVG concepts are tracked here.
+# ---------------------------------------------------------------------------
+brand-explore/*
+!brand-explore/encode-clips.sh
+!brand-explore/round-01/
+brand-explore/round-01/*
+!brand-explore/round-01/*.svg
+!brand-explore/round-01/index.html

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <rect width="600" height="320" fill="#fff"/>
+  <!-- Sigil: trident integrated into a U-shape, with "3" curves on either side -->
+  <g transform="translate(300,40)" stroke="#000" stroke-width="18" fill="none" stroke-linecap="square">
+    <!-- center spike -->
+    <line x1="0" y1="0" x2="0" y2="80"/>
+    <!-- left prong -->
+    <line x1="-50" y1="20" x2="-50" y2="80"/>
+    <!-- right prong -->
+    <line x1="50" y1="20" x2="50" y2="80"/>
+    <!-- crossbar -->
+    <line x1="-70" y1="80" x2="70" y2="80"/>
+    <!-- U curve below trident -->
+    <path d="M -70 80 L -70 180 Q -70 200 -50 200 L 50 200 Q 70 200 70 180 L 70 80"/>
+  </g>
+  <!-- wordmark below -->
+  <text x="300" y="285" text-anchor="middle"
+        font-family="'Arial Black', Impact, sans-serif"
+        font-size="62" font-weight="900" letter-spacing="14"
+        fill="#000">U3ZUB</text>
+</svg>

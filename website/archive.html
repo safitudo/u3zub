@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>U3ZUB — Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Manrope:wght@400;500;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --yellow:#ffd500;
+    --stencil:'Stardos Stencil',Impact,sans-serif;
+    --body:'Manrope',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#0a0a0a;color:#fff;font-family:var(--body);min-height:100vh;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  ::selection{background:var(--yellow);color:#000}
+
+  /* top strip */
+  .strip{
+    position:sticky;top:0;z-index:30;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;background:#000;border-bottom:1px solid #1a1a1a;
+  }
+  .strip__back{
+    display:flex;align-items:center;gap:14px;
+    font-family:var(--stencil);letter-spacing:.18em;font-size:14px;text-transform:uppercase;
+  }
+  .strip__back .arrow{
+    width:32px;height:32px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+  .strip__back:hover .arrow{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .strip__brand{font-family:var(--stencil);font-size:22px;letter-spacing:.08em}
+  .strip__count{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:#888;text-transform:uppercase}
+
+  /* page header */
+  .head{padding:80px 32px 32px;max-width:1400px;margin:0 auto}
+  .head h1{
+    font-family:var(--stencil);text-transform:uppercase;
+    font-size:clamp(64px,10vw,160px);line-height:.9;letter-spacing:.01em;
+    margin-bottom:14px;
+  }
+  .head p{font-family:var(--mono);font-size:13px;letter-spacing:.18em;color:#888;text-transform:uppercase;max-width:60ch}
+  .head .kicker{
+    display:inline-flex;align-items:center;gap:14px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.25em;color:var(--yellow);text-transform:uppercase;margin-bottom:18px;
+  }
+  .head .kicker::before{content:"";width:32px;height:1px;background:currentColor}
+
+  /* filter chips */
+  .filters{
+    position:sticky;top:65px;z-index:20;
+    padding:18px 32px;background:rgba(10,10,10,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid #1a1a1a;
+    display:flex;gap:8px;align-items:center;overflow-x:auto;
+  }
+  .chip{
+    padding:8px 16px;border:1px solid #333;
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    white-space:nowrap;color:#aaa;
+  }
+  .chip:hover{border-color:#fff;color:#fff}
+  .chip.on{background:#fff;color:#000;border-color:#fff}
+  .chip__count{margin-left:8px;color:#666}
+  .chip.on .chip__count{color:#666}
+
+  /* wall */
+  .wall{
+    column-count:4;column-gap:2px;
+    padding:32px;max-width:1600px;margin:0 auto;
+  }
+  @media (max-width:1200px){.wall{column-count:3}}
+  @media (max-width:760px){.wall{column-count:2;padding:8px}}
+  @media (max-width:420px){.wall{column-count:1}}
+  .item{
+    display:block;break-inside:avoid;margin-bottom:2px;
+    position:relative;cursor:pointer;
+    background:#111;overflow:hidden;
+    width:100%;
+  }
+  .item__media{
+    width:100%;display:block;
+    background:#0a0a0a;
+    position:relative;line-height:0;
+  }
+  .item__media img{width:100%;height:auto;display:block}
+  .item__media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,.85) 100%);
+    pointer-events:none;
+  }
+  .item__badge{
+    position:absolute;top:10px;left:10px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+    padding:3px 7px;background:rgba(0,0,0,.7);border:1px solid #fff;color:#fff;z-index:1;
+  }
+  .item__badge--video{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .item__badge--poster{background:#fff;color:#000;border-color:#fff}
+  .item__caption{
+    position:absolute;left:14px;right:14px;bottom:12px;z-index:1;
+  }
+  .item__caption h3{font-family:var(--stencil);text-transform:uppercase;font-size:16px;line-height:1.05;letter-spacing:.02em}
+  .item__caption .meta{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:#bbb;text-transform:uppercase;margin-top:4px}
+  .item__play{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:48px;height:48px;border:1px solid #fff;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.5);opacity:0;transition:opacity .2s;
+  }
+  .item:hover .item__play{opacity:1}
+  .item__play svg{width:14px;height:14px;fill:#fff}
+
+  /* sentinel + footer */
+  .sentinel{
+    text-align:center;padding:48px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.25em;color:#555;text-transform:uppercase;
+  }
+  .sentinel.loading::after{content:" ●";color:var(--yellow);animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.3}}
+  footer{padding:40px 32px;border-top:1px solid #1a1a1a;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#555;text-transform:uppercase}
+
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.97);display:none;align-items:center;justify-content:center;padding:32px}
+  .lb.open{display:flex}
+  .lb__inner{max-width:1100px;width:100%;position:relative;display:flex;flex-direction:column;align-items:center}
+  .lb__close{position:absolute;top:-44px;right:0;width:40px;height:40px;border:1px solid #fff;color:#fff;font-family:var(--stencil);font-size:18px;display:flex;align-items:center;justify-content:center;z-index:2}
+  .lb__close:hover{background:var(--yellow);color:#000;border-color:var(--yellow)}
+  .lb__stage{
+    width:100%;max-height:80vh;background:#000;
+    display:flex;align-items:center;justify-content:center;color:#444;font-family:var(--mono);font-size:11px;letter-spacing:.2em;
+    border:1px solid #222;overflow:hidden;
+  }
+  .lb__stage video, .lb__stage img{max-width:100%;max-height:80vh;width:auto;height:auto;display:block;background:#000}
+  .lb__caption{width:100%}
+  .lb__caption{padding:16px 0 0;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+  .lb__caption h3{font-family:var(--stencil);text-transform:uppercase;font-size:28px;letter-spacing:.03em}
+  .lb__caption .meta{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:#888;text-transform:uppercase;margin-top:6px}
+  .lb__nav-btns{display:flex;gap:6px}
+  .lb__nav-btns button{width:40px;height:40px;border:1px solid #fff;color:#fff;font-family:var(--stencil);font-size:18px}
+  .lb__nav-btns button:hover{background:var(--yellow);color:#000;border-color:var(--yellow)}
+
+  :focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <a href="index.html" class="strip__back"><span class="arrow">←</span> BACK</a>
+  <div class="strip__brand">U3ZUB / ARCHIVE</div>
+  <div class="strip__count" id="hcount">— ITEMS</div>
+</div>
+
+<header class="head">
+  <div class="kicker">/ MEDIA WALL</div>
+  <h1>EVERYTHING<br/>WE'VE FILMED.</h1>
+  <p>Footage from every stage we've stood on since 2022. Mixed, untagged, unfiltered. The order is roughly chronological. Click a tile to see it full-size.</p>
+</header>
+
+<div class="filters" id="filters"></div>
+
+<div class="wall" id="wall"></div>
+
+<div class="sentinel" id="sentinel">SCROLL FOR MORE ↓</div>
+
+<footer>© 2026 · U3ZUB · CONTACT@U3ZUB.COM</footer>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true">
+  <div class="lb__inner">
+    <button class="lb__close" id="lbClose" aria-label="Close">×</button>
+    <div class="lb__stage" id="lbStage">[ ]</div>
+    <div class="lb__caption">
+      <div>
+        <h3 id="lbTitle">—</h3>
+        <div class="meta" id="lbMeta">—</div>
+      </div>
+      <div class="lb__nav-btns">
+        <button id="lbPrev" aria-label="Previous">←</button>
+        <button id="lbNext" aria-label="Next">→</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== real media ====== */
+const VIDEOS = [
+  'img_2465_krystyna','img_2466_krystyna','img_2467_krystyna','img_2470_krystyna',
+  'img_2471_krystyna','img_2472_krystyna','img_2474_krystyna','img_2475_krystyna',
+  'img_2476_krystyna','img_2477_krystyna','img_2548_krystyna','img_2550_krystyna',
+  'img_2551_krystyna','img_2552_krystyna','img_2553_krystyna','img_2554_krystyna',
+  'img_2558_krystyna','img_2559_krystyna','img_2560_krystyna','img_8063_krystyna',
+  'img_8831_krystyna','u3zub_-_ukraine_4k_30_alexander_dubovenko'
+].map(slug => ({
+  type:'video',
+  src:`assets/clips/${slug}.mp4`,
+  thumb:`assets/clips/thumbs/${slug}.jpg`,
+  title: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'UKRAINE · MUSIC VIDEO (4K)' : `LIVE TAPE · ${slug.split('_')[1] || ''}`,
+  meta: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'Master · A. Dubovenko' : 'Field recording · untagged',
+}));
+
+const PHOTOS = [
+  {file:'photos/band-photo.jpg', title:'U3ZUB · BAND PORTRAIT', meta:'2025 · San Diego, CA'},
+  {file:'photos/team-photo.jpg', title:'U3ZUB · TEAM', meta:'2025 · San Diego, CA'},
+  {file:'photos/team-2.jpg',     title:'U3ZUB · ON STAGE', meta:'2025 · San Diego, CA'},
+  {file:'photos/fb-1.jpg',       title:'U3ZUB · LIVE', meta:'2025 · San Diego, CA'},
+  {file:'photos/fb-2.jpg',       title:'U3ZUB · LIVE', meta:'2025 · San Diego, CA'},
+].map(p => ({type:'photo', src:`assets/${p.file}`, thumb:`assets/${p.file}`, title:p.title, meta:p.meta}));
+
+const POSTERS = [
+  {file:'mlk-2026.jpg', title:'44TH ANNUAL MLK JR. PARADE', meta:'JAN 2026 · San Diego, CA'},
+  {file:'poster16.png', title:'HPR 90TH ANNIVERSARY', meta:'SEP 2025 · Balboa Park'},
+  {file:'poster21.png', title:'UKRAINIAN FESTIVAL 2025', meta:'AUG 2025 · House of Ukraine'},
+  {file:'poster13.png', title:'U3ZUB & TARAS FILENKO', meta:'APR 2025 · Escondido Library'},
+  {file:'poster8.png',  title:'BELIEVE IN UKRAINE', meta:'FEB 2025 · Central Library, SD'},
+  {file:'poster3.png',  title:'CONCERT FOR UKRAINE', meta:'DEC 2024 · The Mint, LA'},
+  {file:'poster17.png', title:'INTL. CHRISTMAS FESTIVAL', meta:'DEC 2024 · House of Ukraine'},
+  {file:'poster10.png', title:'UKETOBER FEST', meta:'AUG 2024 · Chicago, IL'},
+  {file:'poster11.png', title:'BEER & BANDAGES', meta:'AUG 2024 · Kilowatt Brewery'},
+  {file:'poster12.png', title:"DON'T ABANDON UKRAINE", meta:'AUG 2024 · Balboa Park'},
+  {file:'poster4.png',  title:'U3ZUB CONCERT', meta:'JUL 2024 · Escondido Library'},
+  {file:'poster18.png', title:'BALBOA PARK DECEMBER NIGHTS', meta:'DEC 2023 · House of Ukraine'},
+  {file:'poster7.png',  title:'UKRAINIAN FESTIVAL 2023', meta:'SEP 2023 · House of Ukraine'},
+  {file:'poster.jpg',   title:'СКРЯБІН TRIBUTE', meta:"AUG 2023 · Winston's, OB"},
+  {file:'poster19.png', title:'IVANA KUPALA', meta:'JUN 2023 · Mission Bay'},
+  {file:'poster20.png', title:'40TH ETHNIC FOOD FAIR', meta:'MAY 2023 · Balboa Park'},
+  {file:'poster14.png', title:'EARLY GIG', meta:'2022 · San Diego'},
+].map(p => ({type:'poster', src:`assets/posters/${p.file}`, thumb:`assets/posters/${p.file}`, title:p.title, meta:p.meta}));
+
+const ALL = [...VIDEOS, ...PHOTOS, ...POSTERS].map((m,i)=>({...m, id:i+1}));
+
+/* ====== filters ====== */
+const FILTERS = [
+  {k:'all', label:'ALL'},
+  {k:'video', label:'VIDEOS'},
+  {k:'photo', label:'PHOTOS'},
+  {k:'poster', label:'POSTERS'},
+];
+let active = 'all';
+const filtersEl = document.getElementById('filters');
+FILTERS.forEach(f=>{
+  const b = document.createElement('button');
+  b.className = 'chip' + (f.k===active?' on':'');
+  b.dataset.k = f.k;
+  b.innerHTML = `${f.label}<span class="chip__count">${countFor(f.k)}</span>`;
+  b.addEventListener('click',()=>{active=f.k; rebuild();});
+  filtersEl.appendChild(b);
+});
+function countFor(k){
+  if(k==='all') return ALL.length;
+  return ALL.filter(x=>x.type===k).length;
+}
+function filterList(){
+  if(active==='all') return ALL;
+  return ALL.filter(x=>x.type===active);
+}
+
+/* ====== render with progressive load ====== */
+const wall = document.getElementById('wall');
+const sentinel = document.getElementById('sentinel');
+const hcount = document.getElementById('hcount');
+let view = [];
+let cursor = 0;
+const BATCH = 24;
+
+function rebuild(){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.k===active));
+  wall.innerHTML='';
+  view = filterList();
+  cursor = 0;
+  hcount.textContent = `${view.length} ITEMS`;
+  loadMore();
+}
+function loadMore(){
+  if(cursor >= view.length){
+    sentinel.textContent = '— END OF ARCHIVE —';
+    sentinel.classList.remove('loading');
+    return;
+  }
+  sentinel.classList.add('loading');
+  sentinel.textContent = 'LOADING';
+  const next = view.slice(cursor, cursor+BATCH);
+  cursor += BATCH;
+  next.forEach((it, idx)=>{
+    const item = document.createElement('button');
+    item.className = 'item';
+    item.style.animation = `fade .4s ease ${(idx%8)*40}ms both`;
+    const mediaInner = it.thumb
+      ? `<img src="${it.thumb}" alt="${it.title}" loading="lazy">`
+      : '';
+    item.innerHTML = `
+      <div class="item__media">${mediaInner}</div>
+      <div class="item__badge item__badge--${it.type}">${it.type}</div>
+      ${it.type==='video' ? '<div class="item__play"><svg viewBox="0 0 12 12"><polygon points="3,2 10,6 3,10"/></svg></div>' : ''}
+      <div class="item__caption">
+        <h3>${it.title}</h3>
+        <div class="meta">${it.meta}</div>
+      </div>
+    `;
+    item.addEventListener('click',()=>openLB(view.indexOf(it)));
+    wall.appendChild(item);
+  });
+  setTimeout(()=>{
+    if(cursor >= view.length){
+      sentinel.textContent = '— END OF ARCHIVE —';
+      sentinel.classList.remove('loading');
+    }else{
+      sentinel.textContent = 'SCROLL FOR MORE ↓';
+      sentinel.classList.remove('loading');
+    }
+  }, 250);
+}
+const io = new IntersectionObserver((es)=>{
+  es.forEach(en=>{ if(en.isIntersecting && cursor < view.length) loadMore(); });
+},{rootMargin:'400px'});
+io.observe(sentinel);
+
+/* fade keyframes */
+const sty = document.createElement('style');
+sty.textContent = `@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}`;
+document.head.appendChild(sty);
+
+rebuild();
+
+/* ====== lightbox ====== */
+const lb = document.getElementById('lb');
+let lbIdx = 0;
+function openLB(i){
+  lbIdx = i;
+  paintLB();
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function paintLB(){
+  const it = view[lbIdx];
+  document.getElementById('lbTitle').textContent = it.title;
+  document.getElementById('lbMeta').textContent = `${it.type.toUpperCase()} · ${it.meta} · ${lbIdx+1} / ${view.length}`;
+  const stage = document.getElementById('lbStage');
+  if(it.type==='video'){
+    stage.innerHTML = `<video src="${it.src}" controls autoplay playsinline preload="metadata"></video>`;
+  }else{
+    stage.innerHTML = `<img src="${it.src}" alt="${it.title}"/>`;
+  }
+}
+function closeLB(){
+  // pause any playing video
+  const v = lb.querySelector('video'); if(v){ try{v.pause()}catch(_){} }
+  document.getElementById('lbStage').innerHTML = '';
+  lb.classList.remove('open');document.body.style.overflow='';
+}
+document.getElementById('lbClose').addEventListener('click',closeLB);
+document.getElementById('lbPrev').addEventListener('click',()=>{lbIdx=(lbIdx-1+view.length)%view.length;paintLB()});
+document.getElementById('lbNext').addEventListener('click',()=>{lbIdx=(lbIdx+1)%view.length;paintLB()});
+lb.addEventListener('click',e=>{ if(e.target===lb) closeLB(); });
+window.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLB();
+  if(e.key==='ArrowRight'){lbIdx=(lbIdx+1)%view.length;paintLB()}
+  if(e.key==='ArrowLeft'){lbIdx=(lbIdx-1+view.length)%view.length;paintLB()}
+});
+</script>
+</body>
+</html>
