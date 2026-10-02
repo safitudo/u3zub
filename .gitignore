@@ -15,6 +15,8 @@ node_modules/
 #
 # Cloning this repo gives you the full site EXCEPT these files. Sources:
 #   clips      ~/Movies/u3zub-archive/raw  →  brand-explore/encode-clips.sh
+#              (encoded clips live in media/clips and deploy as the separate
+#              Vercel project u3zub-media, not with the website)
 #   posters    stanislav-vault, u3zub/
 #   hero video stanislav-vault, u3zub/
 #   raw people portrait sources, stanislav-vault
@@ -22,6 +24,7 @@ node_modules/
 # Kept in the repo: clips/thumbs, hero poster frame, people/portraits,
 # photos, team, and wordmark.jpg — about 7 MB in total.
 # ---------------------------------------------------------------------------
+media/clips/
 website/assets/clips/*.mp4
 website/assets/posters/
 website/assets/hero/*.mp4

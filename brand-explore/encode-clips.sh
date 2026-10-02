@@ -1,11 +1,14 @@
 #!/bin/bash
 # Encode all .mov/.mp4 in ~/Movies/u3zub-archive/raw to web-optimized H.264.
 # Preserves native aspect ratio (no pillarbox padding).
-# Output: website/assets/clips/{stem}.mp4
+# Output: media/clips/{stem}.mp4 (deployed as the u3zub-media Vercel project)
+#         thumbs → website/assets/clips/thumbs/{stem}.jpg
 set -e
 SRC="${SRC:-$HOME/Movies/u3zub-archive/raw}"
-OUT="${OUT:-$(cd "$(dirname "$0")/.." && pwd)/website/assets/clips}"
-mkdir -p "$OUT"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+OUT="${OUT:-$ROOT/media/clips}"
+THUMBS="${THUMBS:-$ROOT/website/assets/clips/thumbs}"
+mkdir -p "$OUT" "$THUMBS"
 
 shopt -s nullglob nocaseglob
 COUNT=0; OK=0; FAIL=0
@@ -40,10 +43,11 @@ du -sh "$OUT"
 # Regenerate thumbs at native aspect
 echo ""
 echo "Regenerating thumbs..."
-mkdir -p "$OUT/thumbs"
 for f in "$OUT"/*.mp4; do
   base=$(basename "$f" .mp4)
-  thumb="$OUT/thumbs/$base.jpg"
+  thumb="$THUMBS/$base.jpg"
   ffmpeg -y -ss 2 -i "$f" -frames:v 1 -vf "scale='if(gt(iw,ih),640,-2)':'if(gt(iw,ih),-2,640)'" "$thumb" -loglevel error 2>&1 | tail -1
 done
 echo "Thumbs regenerated."
+echo ""
+echo "Next: cd $ROOT/media && vercel deploy --prod   # publish clips"

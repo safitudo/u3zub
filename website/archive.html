@@ -187,6 +187,8 @@
 
 <script>
 /* ====== real media ====== */
+/* Clips live in the separate u3zub-media Vercel project (see ../media/). */
+const CLIPS_BASE = 'https://u3zub-media.vercel.app/clips';
 const NAMED_CLIPS = {
   la26_uu:            {title:'UKRAINE · LIVE IN LA',          meta:'AUG 2026 · Ukrainian Culture Center, LA'},
   dc26_zombie:        {title:'ZOMBIE · LIVE IN D.C.',         meta:'APR 2026 · Ukraine Action Summit, D.C.'},
@@ -208,7 +210,7 @@ const VIDEOS = [
   const n = NAMED_CLIPS[slug];
   return {
     type:'video',
-    src:`assets/clips/${slug}.mp4`,
+    src:`${CLIPS_BASE}/${slug}.mp4`,
     thumb:`assets/clips/thumbs/${slug}.jpg`,
     title: n ? n.title : `LIVE TAPE · ${slug.split('_')[1] || ''}`,
     meta: n ? n.meta : 'Field recording · untagged',

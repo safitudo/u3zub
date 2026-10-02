@@ -16,6 +16,8 @@ website/          the site — static HTML/CSS/JS, no framework, no build step
   index.html      one-pager: hero, live, feed, people, support, contact
   archive.html    /archive — filterable media wall
   rider.html      /rider — tech rider, prints to letter-size PDF
+media/            the clip bucket — a second Vercel project (u3zub-media) holding
+                  the 2 GB of encoded performance videos, deployed separately
 SPEC.md           full content + behavior spec, and what is still unbuilt
 brand-explore/    round-01 logo concepts, and the ffmpeg clip encoder
 ```
@@ -31,19 +33,21 @@ cd website && python3 -m http.server 8080
 
 ## A note on media
 
-Most of the band's media is **not** in this repo. The video archive alone is 1.5 GB
-and two clips exceed GitHub's 100 MB per-file limit. Those files live on disk and are
-uploaded directly by `vercel deploy`; [`.gitignore`](.gitignore) records where each
-set comes from.
+Most of the band's media is **not** in this repo. The video archive alone is 2 GB
+and several clips exceed GitHub's 100 MB per-file limit. Those files live on disk:
+clips in `media/clips/`, deployed on their own as the `u3zub-media` Vercel project;
+posters and the hero video in `website/assets/`, uploaded by the website's
+`vercel deploy`. [`.gitignore`](.gitignore) records where each set comes from.
 
 What is tracked: clip thumbnails, band photos, member portraits, and the wordmark —
 about 7 MB.
 
 A fresh clone serves all three pages and the layout is intact, but it is visibly
 incomplete: the hero falls back to its poster frame instead of the video loop, and the
-"where we played" column renders 18 rows with empty art, since every event poster is
-untracked. Clip thumbnails, portraits and band photos all render. Restore the missing
-sets from the vault to get the real thing.
+"where we played" column renders its rows with empty art, since every event poster is
+untracked. Clips still play, because they stream from the live media project. Clip
+thumbnails, portraits and band photos all render. Restore the missing sets from the
+vault to get the real thing.
 
 ## Support Ukraine
 

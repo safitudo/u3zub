@@ -22,8 +22,9 @@ vercel deploy --prod  # production (u3zub.com)
 
 Vercel project: `website`, team `safitudos-projects`.
 
-> **Heads up:** `assets/clips/` is 1.5 GB and is not ignored, so every deploy re-uploads it.
-> Expect a slow push. See §9 of the spec for the fix.
+Clips are **not** part of this deploy. They live in [`../media/`](../media/) and ship as
+the separate Vercel project `u3zub-media`; both pages reference them through `CLIPS_BASE`.
+Deploy that project only when clips change.
 
 ## Structure
 
@@ -31,7 +32,7 @@ Vercel project: `website`, team `safitudos-projects`.
 index.html     homepage one-pager — hero, live, feed, people, support, contact
 archive.html   /archive — filterable media wall, 24 items per scroll batch
 rider.html     /rider — tech rider, prints clean to letter-size PDF
-assets/        wordmark, hero video, clips + thumbs, posters, photos, portraits
+assets/        wordmark, hero video, clip thumbs, posters, photos, portraits
 vercel.json    cleanUrls + immutable cache headers on static assets
 .vercelignore  raw portrait sources and this README
 ```
@@ -54,5 +55,6 @@ Two things are hardcoded in markup rather than data, and need editing by hand:
 ## Adding clips
 
 `../brand-explore/encode-clips.sh` encodes `~/Movies/u3zub-archive/raw` to web H.264
-(longest side 1280, CRF 24, faststart) and regenerates `assets/clips/thumbs/`.
-Note that it encodes full-length performances — that is where the 1.5 GB comes from.
+(longest side 1280, CRF 24, faststart) into `../media/clips/` and regenerates
+`assets/clips/thumbs/`. Then `cd ../media && vercel deploy --prod`, and add the slug to
+`NAMED_CLIPS` / the slug lists in both pages.

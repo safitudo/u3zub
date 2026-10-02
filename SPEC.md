@@ -5,7 +5,7 @@ Describes what the site **is** today. For anything not yet built, see §9.
 **Last updated:** 2026-10-01
 **Owner:** Stanislav Synko
 **Live:** https://u3zub.com (also `www.u3zub.com`)
-**Hosting:** Vercel — team `safitudos-projects`, project `website`
+**Hosting:** Vercel — team `safitudos-projects`, project `website`; clips served by a second project, `u3zub-media` (`media/` in the repo)
 **Stack:** static HTML/CSS/JS. No framework, no build step, no dependencies.
 **Languages:** English (default) and Ukrainian, toggled in nav and footer
 
@@ -153,13 +153,13 @@ All data is hardcoded as JS consts at the bottom of `index.html` — there is no
 
 ## 8. Assets
 
-`website/assets/` — 2.2 GB on disk.
+`website/assets/` — ~170 MB on disk. `media/clips/` — 2.0 GB.
 
 | Path | Contents |
 |---|---|
 | `wordmark.jpg` | the stencil logo, used in hero and footer |
 | `hero/` | `hero-1.mp4` (14 MB) + poster frame |
-| `clips/` | 27 encoded performance videos, **2.0 GB** · `clips/thumbs/` holds the 27 JPEG thumbnails |
+| `clips/thumbs/` | 27 JPEG clip thumbnails. The clips themselves (**2.0 GB**) live in `media/clips/` and stream from the `u3zub-media` project via `CLIPS_BASE` |
 | `posters/` | 20 event posters, 101 MB |
 | `photos/` | 6 band photos |
 | `people/portraits/` | 5 AI-generated member portraits (shipped) |
@@ -184,7 +184,7 @@ Carried forward from the original spec, still open:
 - **Ukrainian copy review** — every `data-ua` string is unreviewed.
 - **Lightbox carousel** — events can hold both a poster and a cover, but only the first is ever shown.
 - **Shared data between `index.html` and `archive.html`** — currently duplicated by hand.
-- **Clip weight** — the 1.5 GB in `clips/` uploads on every `vercel deploy`. Either cut short previews or move the originals to a separate project and reference by URL.
+- **`media.u3zub.com`** — registered on the `u3zub-media` project but waiting on an `A 76.76.21.21` record at GoDaddy. Until then `CLIPS_BASE` points at `u3zub-media.vercel.app`.
 
 Explicitly out of scope: merch, newsletter, blog, user accounts, comments.
 

@@ -836,6 +836,8 @@ const $$ = s => document.querySelectorAll(s);
   }));
 
   // Vertical clips are tall; keep the count modest so column heights stay close to posters.
+/* Clips live in the separate u3zub-media Vercel project (see ../media/). */
+const CLIPS_BASE = 'https://u3zub-media.vercel.app/clips';
   // Named clips first (newest shows), then a handful of the untagged field recordings.
   const NAMED_CLIPS = {
     la26_uu:            {title_en:'UKRAINE · LIVE IN LA',      title_ua:'УКРАЇНА · НАЖИВО В ЛА',          meta:'AUG 2026 · Ukrainian Culture Center, Los Angeles'},
@@ -854,7 +856,7 @@ const $$ = s => document.querySelectorAll(s);
     const n = NAMED_CLIPS[slug];
     return {
       type:'video',
-      src:`assets/clips/${slug}.mp4`, thumb:`assets/clips/thumbs/${slug}.jpg`,
+      src:`${CLIPS_BASE}/${slug}.mp4`, thumb:`assets/clips/thumbs/${slug}.jpg`,
       title_en: n ? n.title_en : 'LIVE TAPE',
       title_ua: n ? n.title_ua : 'ЖИВИЙ ЗАПИС',
       meta: n ? n.meta : 'Field recording'
