@@ -1,6 +1,6 @@
 # U3ZUB — media bucket
 
-Static Vercel project (`u3zub-media`) that serves only the encoded performance clips.
+Static Vercel project (`u3zub-media`, https://media.u3zub.com) that serves only the encoded performance clips.
 Kept apart from the website so site deploys do not re-upload 2 GB of video.
 
 ```

@@ -5,7 +5,7 @@ Describes what the site **is** today. For anything not yet built, see §9.
 **Last updated:** 2026-10-01
 **Owner:** Stanislav Synko
 **Live:** https://u3zub.com (also `www.u3zub.com`)
-**Hosting:** Vercel — team `safitudos-projects`, project `website`; clips served by a second project, `u3zub-media` (`media/` in the repo)
+**Hosting:** Vercel — team `safitudos-projects`, project `website`; clips served by a second project, `u3zub-media`, at media.u3zub.com (`media/` in the repo)
 **Stack:** static HTML/CSS/JS. No framework, no build step, no dependencies.
 **Languages:** English (default) and Ukrainian, toggled in nav and footer
 
@@ -184,7 +184,7 @@ Carried forward from the original spec, still open:
 - **Ukrainian copy review** — every `data-ua` string is unreviewed.
 - **Lightbox carousel** — events can hold both a poster and a cover, but only the first is ever shown.
 - **Shared data between `index.html` and `archive.html`** — currently duplicated by hand.
-- **`media.u3zub.com`** — registered on the `u3zub-media` project but waiting on an `A 76.76.21.21` record at GoDaddy. Until then `CLIPS_BASE` points at `u3zub-media.vercel.app`.
+
 
 Explicitly out of scope: merch, newsletter, blog, user accounts, comments.
 
