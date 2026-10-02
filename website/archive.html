@@ -248,7 +248,16 @@ const POSTERS = [
   {file:'poster14.png', title:'EARLY GIG', meta:'2022 · San Diego'},
 ].map(p => ({type:'poster', src:`assets/posters/${p.file}`, thumb:`assets/posters/${p.file}`, title:p.title, meta:p.meta}));
 
-const ALL = [...VIDEOS, ...PHOTOS, ...POSTERS].map((m,i)=>({...m, id:i+1}));
+// Newest first across all types; undated items (untagged field recordings) go last.
+const MONTHS = {JAN:1,FEB:2,MAR:3,APR:4,MAY:5,JUN:6,JUL:7,AUG:8,SEP:9,OCT:10,NOV:11,DEC:12};
+function whenOf(meta){
+  const m = (meta||'').toUpperCase().match(/(?:([A-Z]{3})\s+)?(\d{4})/);
+  return m ? Number(m[2])*100 + (MONTHS[m[1]]||0) : 0;
+}
+const ALL = [...VIDEOS, ...PHOTOS, ...POSTERS]
+  .map((m,i)=>({m,i,w:whenOf(m.meta)}))
+  .sort((a,b)=>(b.w-a.w)||(a.i-b.i))
+  .map((x,i)=>({...x.m, id:i+1}));
 
 /* ====== filters ====== */
 const FILTERS = [

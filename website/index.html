@@ -872,7 +872,18 @@ const CLIPS_BASE = 'https://media.u3zub.com/clips';
   ].map(p => ({type:'photo', src:`assets/photos/${p.file}`, thumb:`assets/photos/${p.file}`, title_en:p.title_en, title_ua:p.title_ua, meta:p.meta||'2025 · San Diego, CA'}));
 
   // Films column: photos at the top (band identity), then videos
-  const filmItems = [...photoItems, ...videoItems];
+  // Newest first. Dates come from the meta string ("AUG 2026 · …", "2025 · …");
+  // undated items (untagged field recordings) sink to the bottom, keeping their order.
+  const MONTHS = {JAN:1,FEB:2,MAR:3,APR:4,MAY:5,JUN:6,JUL:7,AUG:8,SEP:9,OCT:10,NOV:11,DEC:12};
+  function whenOf(meta){
+    const m = (meta||'').toUpperCase().match(/(?:([A-Z]{3})\s+)?(\d{4})/);
+    if(!m) return 0;
+    return Number(m[2])*100 + (MONTHS[m[1]]||0);
+  }
+  const filmItems = [...photoItems, ...videoItems]
+    .map((it,i) => ({it, i, w: whenOf(it.meta)}))
+    .sort((a,b) => (b.w - a.w) || (a.i - b.i))
+    .map(x => x.it);
 
   function renderItem(it){
     const btn = document.createElement('button');
