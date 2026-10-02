@@ -187,20 +187,33 @@
 
 <script>
 /* ====== real media ====== */
+const NAMED_CLIPS = {
+  la26_uu:            {title:'UKRAINE · LIVE IN LA',          meta:'AUG 2026 · Ukrainian Culture Center, LA'},
+  dc26_zombie:        {title:'ZOMBIE · LIVE IN D.C.',         meta:'APR 2026 · Ukraine Action Summit, D.C.'},
+  dc26_another_brick: {title:'ANOTHER BRICK · LIVE IN D.C.',  meta:'APR 2026 · Ukraine Action Summit, D.C.'},
+  dc26_dopomoga:      {title:'ДОПОМОГА · LIVE IN D.C.',       meta:'APR 2026 · Ukraine Action Summit, D.C.'},
+  dc26_tikayut:       {title:'ТІКАЮТЬ · LIVE IN D.C.',        meta:'APR 2026 · Ukraine Action Summit, D.C.'},
+  'u3zub_-_ukraine_4k_30_alexander_dubovenko': {title:'UKRAINE · MUSIC VIDEO (4K)', meta:'Master · A. Dubovenko'},
+};
 const VIDEOS = [
+  'la26_uu','dc26_zombie','dc26_another_brick','dc26_dopomoga','dc26_tikayut',
+  'u3zub_-_ukraine_4k_30_alexander_dubovenko',
   'img_2465_krystyna','img_2466_krystyna','img_2467_krystyna','img_2470_krystyna',
   'img_2471_krystyna','img_2472_krystyna','img_2474_krystyna','img_2475_krystyna',
   'img_2476_krystyna','img_2477_krystyna','img_2548_krystyna','img_2550_krystyna',
   'img_2551_krystyna','img_2552_krystyna','img_2553_krystyna','img_2554_krystyna',
   'img_2558_krystyna','img_2559_krystyna','img_2560_krystyna','img_8063_krystyna',
-  'img_8831_krystyna','u3zub_-_ukraine_4k_30_alexander_dubovenko'
-].map(slug => ({
-  type:'video',
-  src:`assets/clips/${slug}.mp4`,
-  thumb:`assets/clips/thumbs/${slug}.jpg`,
-  title: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'UKRAINE · MUSIC VIDEO (4K)' : `LIVE TAPE · ${slug.split('_')[1] || ''}`,
-  meta: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'Master · A. Dubovenko' : 'Field recording · untagged',
-}));
+  'img_8831_krystyna'
+].map(slug => {
+  const n = NAMED_CLIPS[slug];
+  return {
+    type:'video',
+    src:`assets/clips/${slug}.mp4`,
+    thumb:`assets/clips/thumbs/${slug}.jpg`,
+    title: n ? n.title : `LIVE TAPE · ${slug.split('_')[1] || ''}`,
+    meta: n ? n.meta : 'Field recording · untagged',
+  };
+});
 
 const PHOTOS = [
   {file:'photos/la-2026.jpg',    title:'35 YEARS OF INDEPENDENCE · LA', meta:'AUG 2026 · Ukrainian Culture Center, LA'},

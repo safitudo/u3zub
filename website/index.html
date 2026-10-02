@@ -836,18 +836,30 @@ const $$ = s => document.querySelectorAll(s);
   }));
 
   // Vertical clips are tall; keep the count modest so column heights stay close to posters.
+  // Named clips first (newest shows), then a handful of the untagged field recordings.
+  const NAMED_CLIPS = {
+    la26_uu:            {title_en:'UKRAINE · LIVE IN LA',      title_ua:'УКРАЇНА · НАЖИВО В ЛА',          meta:'AUG 2026 · Ukrainian Culture Center, Los Angeles'},
+    dc26_zombie:        {title_en:'ZOMBIE · LIVE IN D.C.',     title_ua:'ZOMBIE · НАЖИВО У ВАШИНГТОНІ',    meta:'APR 2026 · Ukraine Action Summit, Washington, D.C.'},
+    dc26_another_brick: {title_en:'ANOTHER BRICK · LIVE IN D.C.', title_ua:'ANOTHER BRICK · НАЖИВО У ВАШИНГТОНІ', meta:'APR 2026 · Ukraine Action Summit, Washington, D.C.'},
+    dc26_dopomoga:      {title_en:'ДОПОМОГА · LIVE IN D.C.',   title_ua:'ДОПОМОГА · НАЖИВО У ВАШИНГТОНІ',  meta:'APR 2026 · Ukraine Action Summit, Washington, D.C.'},
+    dc26_tikayut:       {title_en:'ТІКАЮТЬ · LIVE IN D.C.',    title_ua:'ТІКАЮТЬ · НАЖИВО У ВАШИНГТОНІ',   meta:'APR 2026 · Ukraine Action Summit, Washington, D.C.'},
+    'u3zub_-_ukraine_4k_30_alexander_dubovenko': {title_en:'UKRAINE · MUSIC VIDEO (4K)', title_ua:'УКРАЇНА · КЛІП (4K)', meta:'A. Dubovenko · master'},
+  };
   const VIDEO_SLUGS = [
+    'la26_uu','dc26_zombie','dc26_another_brick','dc26_dopomoga','dc26_tikayut',
     'u3zub_-_ukraine_4k_30_alexander_dubovenko',
-    'img_2553_krystyna','img_2558_krystyna','img_2477_krystyna',
-    'img_8831_krystyna','img_2466_krystyna','img_2472_krystyna'
+    'img_2553_krystyna','img_2558_krystyna','img_2477_krystyna'
   ];
-  const videoItems = VIDEO_SLUGS.map(slug => ({
-    type:'video',
-    src:`assets/clips/${slug}.mp4`, thumb:`assets/clips/thumbs/${slug}.jpg`,
-    title_en: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'UKRAINE · MUSIC VIDEO (4K)' : 'LIVE TAPE',
-    title_ua: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'УКРАЇНА · КЛІП (4K)' : 'ЖИВИЙ ЗАПИС',
-    meta: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'A. Dubovenko · master' : 'Field recording'
-  }));
+  const videoItems = VIDEO_SLUGS.map(slug => {
+    const n = NAMED_CLIPS[slug];
+    return {
+      type:'video',
+      src:`assets/clips/${slug}.mp4`, thumb:`assets/clips/thumbs/${slug}.jpg`,
+      title_en: n ? n.title_en : 'LIVE TAPE',
+      title_ua: n ? n.title_ua : 'ЖИВИЙ ЗАПИС',
+      meta: n ? n.meta : 'Field recording'
+    };
+  });
   const photoItems = [
     {file:'la-2026.jpg',    title_en:'35 YEARS OF INDEPENDENCE · LOS ANGELES', title_ua:'35 РОКІВ НЕЗАЛЕЖНОСТІ · ЛОС-АНДЖЕЛЕС', meta:'AUG 2026 · Los Angeles, CA'},
     {file:'band-photo.jpg', title_en:'BAND PORTRAIT', title_ua:'ПОРТРЕТ ГУРТУ'},

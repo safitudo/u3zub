@@ -89,7 +89,7 @@ Two columns. Left: **Upcoming** (from `UPCOMING`) then **Past · last five** (fr
 The centerpiece. Full-bleed black, two columns:
 
 - **Left — where we played.** All 18 `EVENTS` that have art, grouped under year headings, newest first. Each row: poster thumbnail, name, city, month. Click opens the lightbox on that event's poster.
-- **Right — what we filmed.** Five band photos followed by seven selected clips (`VIDEO_SLUGS`). Each tile is a static thumbnail with a type badge; videos carry a play glyph. Click opens the lightbox — video items get a `<video controls autoplay preload="metadata">`.
+- **Right — what we filmed.** Six band photos followed by nine selected clips (`VIDEO_SLUGS`). Each tile is a static thumbnail with a type badge; videos carry a play glyph. Click opens the lightbox — video items get a `<video controls autoplay preload="metadata">`.
 
 A `balance()` routine clips the taller column to match the shorter one and fades its edge, re-running on every image load and on resize. Disabled below 900px, where the columns stack.
 
@@ -111,7 +111,7 @@ Shared by the feed and the event rows. Title, subtitle, media stage, ESC hint. L
 
 ## 5. `/archive`
 
-Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 22 clips, 6 photos, 19 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
+Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 27 clips, 6 photos, 19 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
 
 ---
 
@@ -153,13 +153,13 @@ All data is hardcoded as JS consts at the bottom of `index.html` — there is no
 
 ## 8. Assets
 
-`website/assets/` — 1.7 GB on disk.
+`website/assets/` — 2.2 GB on disk.
 
 | Path | Contents |
 |---|---|
 | `wordmark.jpg` | the stencil logo, used in hero and footer |
 | `hero/` | `hero-1.mp4` (14 MB) + poster frame |
-| `clips/` | 22 encoded performance videos, **1.5 GB** · `clips/thumbs/` holds the 22 JPEG thumbnails |
+| `clips/` | 27 encoded performance videos, **2.0 GB** · `clips/thumbs/` holds the 27 JPEG thumbnails |
 | `posters/` | 20 event posters, 101 MB |
 | `photos/` | 6 band photos |
 | `people/portraits/` | 5 AI-generated member portraits (shipped) |
