@@ -325,6 +325,9 @@
     width:84px;height:84px;background:#222 center/cover no-repeat;
     border:1px solid #444;flex:none;filter:grayscale(1) contrast(1.18) brightness(.95);
   }
+  .show__poster--btn{appearance:none;border:1px solid #444;padding:0;cursor:pointer;display:block;transition:opacity .2s,outline-color .2s;outline:1px solid transparent;outline-offset:2px}
+  .show__poster--btn:hover{filter:none;outline-color:var(--yellow)}
+  .show__poster--btn:focus-visible{outline-color:var(--yellow)}
   .show__poster--placeholder{
     background:repeating-linear-gradient(45deg,#1a1a1a 0 6px,#222 6px 12px);
   }
@@ -583,9 +586,9 @@
     </div>
     <aside class="hero__nextshow" aria-label="Next show">
       <div class="hero__nextshow__label"><span data-en>Next show</span><span data-ua>Найближчий концерт</span></div>
-      <div class="hero__nextshow__date">MAY 2</div>
-      <div class="hero__nextshow__where">HPR Ethnic Food Fair · Balboa Park, San Diego</div>
-      <a href="https://houseofukraine.org/event/eff-2026/" target="_blank" rel="noopener" class="hero__nextshow__btn"><span data-en>Details</span><span data-ua>Деталі</span> →</a>
+      <div class="hero__nextshow__date">OCT 11</div>
+      <div class="hero__nextshow__where">3 PM · Rally for Ukraine · Balboa Park, San Diego</div>
+      <a href="#live" class="hero__nextshow__btn"><span data-en>All shows</span><span data-ua>Усі концерти</span> →</a>
     </aside>
   </div>
   <div class="scrollcue" aria-hidden="true"></div>
@@ -746,6 +749,9 @@
 /* ===== data ===== */
 /* Events — chronological, newest first. Posters live at assets/posters/. */
 const EVENTS = [
+  {id:'la-independence-26', name_en:'35 Years of Independence of Ukraine · Headliner', name_ua:'35 років Незалежності України · Хедлайнер', date:'AUG 2026', city:'Ukrainian Culture Center, Los Angeles', poster:'assets/posters/la-independence-2026.jpg'},
+  {id:'nautilus-26', name_en:'Nautilus Room · Guitars only, with Zoli', name_ua:'Nautilus Room · Лише гітари, із Zoli', date:'MAY 2026', city:'Coronado, CA', poster:null},
+  {id:'eff-2026', name_en:'HPR Ethnic Food Fair', name_ua:'Етнічний фестиваль їжі HPR', date:'MAY 2026', city:'Balboa Park, San Diego', poster:null, cover:'assets/posters/poster20.png'},
   {id:'dc-summit-26', name_en:'8th Ukraine Action Summit', name_ua:'8-й Український Саміт', date:'APR 2026', city:'Washington, D.C.', poster:null, cover:'assets/team/team-2.jpeg'},
   {id:'arizona-fest-26', name_en:'Arizona Ukrainian Fest · 1st Annual', name_ua:'Перший Український фестиваль Аризони', date:'JAN 2026', city:'Phoenix, AZ', poster:'assets/posters/arizona-2026.jpg'},
   {id:'mlk-2026', name_en:'44th Annual MLK Jr. Parade', name_ua:'44-й Парад на честь Мартіна Лютера Кінґа', date:'JAN 2026', city:'San Diego, CA', poster:null, cover:'assets/posters/mlk-2026.jpg'},
@@ -769,20 +775,20 @@ const EVENTS = [
 /* Live log — split into upcoming + past. */
 const UPCOMING = [
   {
-    date:'MAY 2 · 2026',
-    time:'2:30 PM',
-    venue:'HPR Ethnic Food Fair · Balboa Park',
+    date:'OCT 11 · 2026',
+    time:'3:00 PM',
+    venue:'Rally for Ukraine · Balboa Park',
     city:'San Diego, CA',
-    poster:'assets/posters/poster20.png',
-    url:'https://houseofukraine.org/event/eff-2026/'
-  },
-  {
-    date:'MAY 17 · 2026',
-    time:'4:30–8:00 PM',
-    venue:'Nautilus Room (guitars only · with Zoli)',
-    city:'Coronado, CA',
     poster:null,
     url:''
+  },
+  {
+    date:'DEC 5 · 2026',
+    time:'',
+    venue:'December Nights · House of Ukraine, Balboa Park',
+    city:'San Diego, CA',
+    poster:'assets/posters/december-nights-2026.jpg',
+    url:'https://houseofukraine.org/event/december-nights-2026/'
   },
 ];
 const PAST = EVENTS.slice(0, 5); // most recent 5 from EVENTS, used for the "last five" log
@@ -843,12 +849,13 @@ const $$ = s => document.querySelectorAll(s);
     meta: slug==='u3zub_-_ukraine_4k_30_alexander_dubovenko' ? 'A. Dubovenko · master' : 'Field recording'
   }));
   const photoItems = [
+    {file:'la-2026.jpg',    title_en:'35 YEARS OF INDEPENDENCE · LOS ANGELES', title_ua:'35 РОКІВ НЕЗАЛЕЖНОСТІ · ЛОС-АНДЖЕЛЕС', meta:'AUG 2026 · Los Angeles, CA'},
     {file:'band-photo.jpg', title_en:'BAND PORTRAIT', title_ua:'ПОРТРЕТ ГУРТУ'},
     {file:'team-photo.jpg', title_en:'U3ZUB · TEAM', title_ua:'U3ZUB · КОМАНДА'},
     {file:'team-2.jpg',     title_en:'ON STAGE',     title_ua:'НА СЦЕНІ'},
     {file:'fb-1.jpg',       title_en:'LIVE',         title_ua:'НАЖИВО'},
     {file:'fb-2.jpg',       title_en:'LIVE',         title_ua:'НАЖИВО'},
-  ].map(p => ({type:'photo', src:`assets/photos/${p.file}`, thumb:`assets/photos/${p.file}`, title_en:p.title_en, title_ua:p.title_ua, meta:'2025 · San Diego, CA'}));
+  ].map(p => ({type:'photo', src:`assets/photos/${p.file}`, thumb:`assets/photos/${p.file}`, title_en:p.title_en, title_ua:p.title_ua, meta:p.meta||'2025 · San Diego, CA'}));
 
   // Films column: photos at the top (band identity), then videos
   const filmItems = [...photoItems, ...videoItems];
@@ -962,7 +969,7 @@ function renderUpcoming(el){
   UPCOMING.forEach(s=>{
     const row = document.createElement('div');
     row.className = 'show show--upcoming';
-    const poster = s.poster ? `<div class="show__poster" style="background-image:url('${s.poster}')"></div>` : `<div class="show__poster show__poster--placeholder"></div>`;
+    const poster = s.poster ? `<button type="button" class="show__poster show__poster--btn" style="background-image:url('${s.poster}')" aria-label="Open poster"></button>` : `<div class="show__poster show__poster--placeholder"></div>`;
     const timeBit = s.time ? `<span class="show__time">${s.time}</span>` : '';
     const linkLbl = s.free ? 'INFO →' : (s.url ? 'INFO →' : '');
     const linkBit = s.url ? `<small><a href="${s.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">${linkLbl}</a></small>` : '';
@@ -971,6 +978,8 @@ function renderUpcoming(el){
       <div class="show__where"><span class="v">${s.venue}</span><span class="c">${s.city}</span>${timeBit}</div>
       <div class="show__date">${s.date}${linkBit}</div>
     `;
+    const pb = row.querySelector('.show__poster--btn');
+    if(pb) pb.addEventListener('click', ()=>openLB({name_en:s.venue, name_ua:s.venue, date:s.date, city:s.city, poster:s.poster}));
     el.appendChild(row);
   });
 }
@@ -979,14 +988,16 @@ function renderPast(el){
   PAST.forEach(e=>{
     const row = document.createElement('div');
     row.className = 'show';
-    const poster = e.poster ? `<div class="show__poster" style="background-image:url('${e.poster}')"></div>` :
-                    e.cover  ? `<div class="show__poster" style="background-image:url('${e.cover}')"></div>` :
-                               `<div class="show__poster show__poster--placeholder"></div>`;
+    const art = e.poster || e.cover;
+    const poster = art ? `<button type="button" class="show__poster show__poster--btn" style="background-image:url('${art}')" aria-label="Open poster"></button>`
+                       : `<div class="show__poster show__poster--placeholder"></div>`;
     row.innerHTML = `
       ${poster}
       <div class="show__where"><span class="v"><span data-en>${e.name_en}</span><span data-ua>${e.name_ua}</span></span><span class="c">${e.city}</span></div>
       <div class="show__date">${e.date}</div>
     `;
+    const pb = row.querySelector('.show__poster--btn');
+    if(pb) pb.addEventListener('click', ()=>openLB(e));
     el.appendChild(row);
   });
 }

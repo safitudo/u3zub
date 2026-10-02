@@ -2,7 +2,7 @@
 
 Describes what the site **is** today. For anything not yet built, see §9.
 
-**Last updated:** 2026-08-22
+**Last updated:** 2026-10-01
 **Owner:** Stanislav Synko
 **Live:** https://u3zub.com (also `www.u3zub.com`)
 **Hosting:** Vercel — team `safitudos-projects`, project `website`
@@ -111,7 +111,7 @@ Shared by the feed and the event rows. Title, subtitle, media stage, ESC hint. L
 
 ## 5. `/archive`
 
-Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 22 clips, 5 photos, 17 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
+Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 22 clips, 6 photos, 19 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
 
 ---
 
@@ -132,7 +132,7 @@ All data is hardcoded as JS consts at the bottom of `index.html` — there is no
 
 | Const | Shape |
 |---|---|
-| `EVENTS` (18) | `{id, name_en, name_ua, date, city, poster, cover}` — newest first |
+| `EVENTS` (21) | `{id, name_en, name_ua, date, city, poster, cover}` — newest first |
 | `UPCOMING` (2) | `{date, time, venue, city, poster, url}` |
 | `PAST` | derived: `EVENTS.slice(0, 5)` |
 | `MEMBERS` (5) | `{name, role_en, role_ua, bio_en, bio_ua, photo}` |
@@ -160,8 +160,8 @@ All data is hardcoded as JS consts at the bottom of `index.html` — there is no
 | `wordmark.jpg` | the stencil logo, used in hero and footer |
 | `hero/` | `hero-1.mp4` (14 MB) + poster frame |
 | `clips/` | 22 encoded performance videos, **1.5 GB** · `clips/thumbs/` holds the 22 JPEG thumbnails |
-| `posters/` | 18 event posters, 100 MB |
-| `photos/` | 5 band photos |
+| `posters/` | 20 event posters, 101 MB |
+| `photos/` | 6 band photos |
 | `people/portraits/` | 5 AI-generated member portraits (shipped) |
 | `people/*` | raw reference photos — kept as portrait source, excluded via `.vercelignore` |
 | `team/` | 2 group shots |
