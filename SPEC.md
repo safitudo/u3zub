@@ -2,7 +2,7 @@
 
 Describes what the site **is** today. For anything not yet built, see §9.
 
-**Last updated:** 2026-10-01
+**Last updated:** 2026-10-07
 **Owner:** Stanislav Synko
 **Live:** https://u3zub.com (also `www.u3zub.com`)
 **Hosting:** Vercel — team `safitudos-projects`, project `website`; clips served by a second project, `u3zub-media`, at media.u3zub.com (`media/` in the repo)
@@ -89,7 +89,7 @@ Two columns. Left: **Upcoming** (from `UPCOMING`) then **Past · last five** (fr
 The centerpiece. Full-bleed black, two columns:
 
 - **Left — where we played.** All 18 `EVENTS` that have art, grouped under year headings, newest first. Each row: poster thumbnail, name, city, month. Click opens the lightbox on that event's poster.
-- **Right — what we filmed.** Six band photos followed by nine selected clips (`VIDEO_SLUGS`). Each tile is a static thumbnail with a type badge; videos carry a play glyph. Click opens the lightbox — video items get a `<video controls autoplay preload="metadata">`.
+- **Right — what we filmed.** Six band photos followed by 21 clips: the 13-song LA set, the four D.C. clips, the 4K video and three field recordings (`VIDEO_SLUGS`). Each tile is a static thumbnail with a type badge; videos carry a play glyph. Click opens the lightbox — video items get a `<video controls autoplay preload="metadata">`.
 
 A `balance()` routine clips the taller column to match the shorter one and fades its edge, re-running on every image load and on resize. Disabled below 900px, where the columns stack.
 
@@ -111,7 +111,7 @@ Shared by the feed and the event rows. Title, subtitle, media stage, ESC hint. L
 
 ## 5. `/archive`
 
-Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 27 clips, 6 photos, 19 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
+Standalone page. Thin header strip with wordmark and a back arrow. Filter chips (`ALL · VIDEOS · PHOTOS · POSTERS`) over a masonry wall of everything: 39 clips, 6 photos, 19 posters. Loads in batches of 24 on scroll. Click opens a lightbox with full media and caption. Same footer as the homepage.
 
 ---
 
@@ -153,13 +153,13 @@ All data is hardcoded as JS consts at the bottom of `index.html` — there is no
 
 ## 8. Assets
 
-`website/assets/` — ~170 MB on disk. `media/clips/` — 2.0 GB.
+`website/assets/` — ~170 MB on disk. `media/clips/` — ~3 GB.
 
 | Path | Contents |
 |---|---|
 | `wordmark.jpg` | the stencil logo, used in hero and footer |
 | `hero/` | `hero-1.mp4` (14 MB) + poster frame |
-| `clips/thumbs/` | 27 JPEG clip thumbnails. The clips themselves (**2.0 GB**) live in `media/clips/` and stream from the `u3zub-media` project via `CLIPS_BASE` |
+| `clips/thumbs/` | 39 JPEG clip thumbnails. The clips themselves (**~3 GB**) live in `media/clips/` and stream from the `u3zub-media` project via `CLIPS_BASE` |
 | `posters/` | 20 event posters, 101 MB |
 | `photos/` | 6 band photos |
 | `people/portraits/` | 5 AI-generated member portraits (shipped) |
